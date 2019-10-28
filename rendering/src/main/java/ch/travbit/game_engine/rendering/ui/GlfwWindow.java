@@ -1,0 +1,133 @@
+package ch.travbit.game_engine.rendering.ui;
+
+import org.joml.Vector4f;
+import org.lwjgl.glfw.GLFWErrorCallback;
+import org.lwjgl.glfw.GLFWVidMode;
+import org.lwjgl.opengl.GL;
+
+import static org.lwjgl.glfw.GLFW.*;
+import static org.lwjgl.opengl.GL11C.glClearColor;
+import static org.lwjgl.system.MemoryUtil.NULL;
+
+/**
+ * This class represents a glfw window.
+ */
+public class GlfwWindow implements Window {
+    private long handle;
+    private int width;
+    private int height;
+    private boolean isResized;
+    private String title;
+
+    private GlfwWindow() {
+        handle = -1L;
+    }
+
+    @Override
+    public void init() {
+        // Setup an error callback. The default implementation
+        // will print the error message in System.err.
+        GLFWErrorCallback.createPrint(System.err);
+
+        // Initialize GLFW. Most GLFW functions will not work before doing this.
+        if (!glfwInit())
+            throw new IllegalStateException("Unable to initialize GLFW");
+
+        glfwDefaultWindowHints(); // optional, the current window hints are already the default
+        glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE); // the window will stay hidden after creation
+        glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE); // the window will be resizable
+
+        handle = glfwCreateWindow(width, height, title, NULL, NULL);
+        if (handle == NULL)
+            throw new RuntimeException("Failed to create the GLFW window");
+
+        glfwSetFramebufferSizeCallback(handle, (window, width, height) -> { // window resize
+            this.width = width;
+            this.height = height;
+            this.isResized = true;
+        });
+
+        glfwSetKeyCallback(handle, (window, key, scancode, action, mods) -> { // key handle
+            if (key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE) {
+                glfwSetWindowShouldClose(window, true); // set the should close boolean to true
+            }
+        });
+
+        // get the resolution of the primary monitor and center the window on the screen
+        GLFWVidMode vidmode = glfwGetVideoMode(glfwGetPrimaryMonitor());
+        glfwSetWindowPos(handle, (vidmode.width() - width) / 2, (vidmode.height() - height) / 2);
+
+        glfwMakeContextCurrent(handle); // make the OpenGL context current
+        enablevSync(); // enable v-sync
+
+        GL.createCapabilities();
+
+        glfwShowWindow(handle); // make the window visible
+
+        Vector4f clearColor = RgbaColor.WHITE.asVector();
+        glClearColor(clearColor.x, clearColor.y, clearColor.z, clearColor.w);
+    }
+
+    private void enablevSync() {
+        glfwSwapInterval(1);
+    }
+
+    @Override
+    public void update() {
+        glfwSwapBuffers(handle);
+        glfwPollEvents();
+    }
+
+    @Override
+    public void setClearColor(RgbaColor color) {
+        Vector4f clearColor = color.asVector();
+        glClearColor(clearColor.x, clearColor.y, clearColor.z, clearColor.w);
+    }
+
+    @Override
+    public boolean shouldClose() {
+        return glfwWindowShouldClose(handle);
+    }
+
+    @Override
+    public boolean isResized() {
+        return isResized;
+    }
+
+    @Override
+    public boolean isKeyPressed(int keyCode) {
+        return glfwGetKey(handle, keyCode) == GLFW_PRESS;
+    }
+
+    /**
+     * Builder class to create a new window instance.
+     */
+    public static class Builder {
+        private int width = 800;
+        private int height = 800;
+        private String title = "Basic Window";
+
+        public Builder setWidth(int width) {
+            this.width = width;
+            return this;
+        }
+
+        public Builder setHeight(int height) {
+            this.height = height;
+            return this;
+        }
+
+        public Builder setTitle(String title) {
+            this.title = title;
+            return this;
+        }
+
+        public GlfwWindow build() {
+            GlfwWindow window = new GlfwWindow();
+            window.height = this.height;
+            window.width = this.width;
+            window.title = this.title;
+            return window;
+        }
+    }
+}
