@@ -50,6 +50,6 @@ public class Polygon extends Shape {
 
     @Override
     public void translate(Vector2f translation) {
-        
+        vertices.forEach(v -> v.add(translation));
     }
 }

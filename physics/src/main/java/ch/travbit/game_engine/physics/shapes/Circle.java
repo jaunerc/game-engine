@@ -22,6 +22,6 @@ public class Circle extends Shape {
 
     @Override
     public void translate(Vector2f translation) {
-
+        center.add(translation);
     }
 }
