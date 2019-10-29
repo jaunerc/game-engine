@@ -1,11 +1,20 @@
 package ch.travbit.game_engine.physics;
 
-public class Collision {
+import ch.travbit.game_engine.physics.shapes.Shape;
+import ch.travbit.game_engine.physics.shapes.intersection.Intersection;
 
-    private Body A, B;
+public class Collision<A extends Shape, B extends Shape> {
 
-    public Collision(Body a, Body b) {
-        A = a;
-        B = b;
+    private Body bodyA, bodyB;
+    private Intersection<A, B> intersection;
+
+    public Collision(Body bodyA, Body bodyB, Intersection<A, B> intersection) {
+        this.bodyA = bodyA;
+        this.bodyB = bodyB;
+        this.intersection = intersection;
+    }
+
+    public boolean isCollision() {
+        return intersection.test();
     }
 }

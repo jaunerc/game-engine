@@ -14,5 +14,14 @@ public class Body {
 
     public void translate(Vector2f translation) {
         position.add(translation);
+        shape.translate(translation);
+    }
+
+    public Vector2f getPosition() {
+        return position;
+    }
+
+    public Shape getShape() {
+        return shape;
     }
 }
