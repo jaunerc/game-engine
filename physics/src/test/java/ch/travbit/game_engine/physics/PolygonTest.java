@@ -1,5 +1,6 @@
 package ch.travbit.game_engine.physics;
 
+import ch.travbit.game_engine.physics.shapes.Polygon;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
