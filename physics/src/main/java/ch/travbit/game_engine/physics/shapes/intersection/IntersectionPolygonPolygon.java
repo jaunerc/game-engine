@@ -14,6 +14,9 @@ public class IntersectionPolygonPolygon extends Intersection<Polygon, Polygon> {
         super(shapeA, shapeB);
     }
 
+    public IntersectionPolygonPolygon() {
+    }
+
     @Override
     public boolean test() {
         Vector2f[] verticesA = getShapeA().getVertices().toArray(new Vector2f[0]);

@@ -17,12 +17,25 @@ public abstract class Intersection<A extends Shape, B extends Shape> {
         this.shapeB = shapeB;
     }
 
+    public Intersection() {
+        shapeA = null;
+        shapeB = null;
+    }
+
     public A getShapeA() {
         return shapeA;
     }
 
     public B getShapeB() {
         return shapeB;
+    }
+
+    public void setShapeA(A shapeA) {
+        this.shapeA = shapeA;
+    }
+
+    public void setShapeB(B shapeB) {
+        this.shapeB = shapeB;
     }
 
     /**

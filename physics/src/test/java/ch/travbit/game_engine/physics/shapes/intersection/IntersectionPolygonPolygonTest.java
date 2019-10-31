@@ -1,11 +1,10 @@
-package ch.travbit.game_engine.physics.intersection;
+package ch.travbit.game_engine.physics.shapes.intersection;
 
 import ch.travbit.game_engine.physics.shapes.Polygon;
-import ch.travbit.game_engine.physics.shapes.intersection.Intersection;
-import ch.travbit.game_engine.physics.shapes.intersection.IntersectionPolygonPolygon;
 import org.joml.Vector2f;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 class IntersectionPolygonPolygonTest {
     Polygon A = new Polygon();
@@ -15,10 +14,10 @@ class IntersectionPolygonPolygonTest {
         A.set(new Vector2f(0,0), new Vector2f(1, 0));
         B.set(new Vector2f(0.5f,0.5f), new Vector2f(0.5f, -0.5f));
     }
+
     @Test
     void testIntersection() {
-        createIntersectingPolygons();
         Intersection<Polygon, Polygon> intersection = new IntersectionPolygonPolygon(A, B);
-        Assertions.assertTrue(intersection.test());
+        assertTrue(intersection.test());
     }
 }
