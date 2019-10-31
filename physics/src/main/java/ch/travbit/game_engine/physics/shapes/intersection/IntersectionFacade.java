@@ -41,7 +41,7 @@ public class IntersectionFacade {
                 return circleCircleIntersection.test();
             }
         } else {
-            throw new IllegalArgumentException("No intersection test found for the given shapes.");
+            throw new IllegalArgumentException("No intersection test exists for the given shapes.");
         }
         return false;
     }
