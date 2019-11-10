@@ -1,4 +1,4 @@
-package ch.travbit.game_engine.physics.shapes.intersection;
+package ch.travbit.game_engine.physics.shapes.intersection.tester;
 
 import ch.travbit.game_engine.physics.shapes.Circle;
 
