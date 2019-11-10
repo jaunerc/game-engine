@@ -1,5 +1,6 @@
 package ch.travbit.game_engine.physics.shapes;
 
+import ch.travbit.game_engine.physics.shapes.intersection.handler.IntersectionHandler;
 import org.joml.Vector2f;
 
 import java.util.ArrayList;
@@ -17,9 +18,15 @@ import java.util.List;
 public class Polygon extends Shape {
 
     private List<Vector2f> vertices;
+    private IntersectionHandler<Polygon> intersectionHandler;
 
     public Polygon() {
+        this(null);
+    }
+
+    public Polygon(IntersectionHandler<Polygon> intersectionHandler) {
         vertices = new ArrayList<>();
+        this.intersectionHandler = intersectionHandler;
     }
 
     /**
@@ -51,5 +58,10 @@ public class Polygon extends Shape {
     @Override
     public void translate(Vector2f translation) {
         vertices.forEach(v -> v.add(translation));
+    }
+
+    @Override
+    public boolean intersectsWith(Shape otherShape) {
+        return intersectionHandler.intersectWithShape(otherShape);
     }
 }

@@ -1,7 +1,7 @@
 package ch.travbit.game_engine.physics;
 
 import ch.travbit.game_engine.physics.shapes.Shape;
-import ch.travbit.game_engine.physics.shapes.intersection.Intersection;
+import ch.travbit.game_engine.physics.shapes.intersection.tester.Intersection;
 
 public class Collision<A extends Shape, B extends Shape> {
 

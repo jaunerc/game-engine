@@ -1,10 +1,12 @@
 package ch.travbit.game_engine.physics.shapes.intersection;
 
 import ch.travbit.game_engine.physics.shapes.Polygon;
+import ch.travbit.game_engine.physics.shapes.intersection.tester.Intersection;
+import ch.travbit.game_engine.physics.shapes.intersection.tester.IntersectionPolygonPolygon;
 import org.joml.Vector2f;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class IntersectionPolygonPolygonTest {
     Polygon A = new Polygon();

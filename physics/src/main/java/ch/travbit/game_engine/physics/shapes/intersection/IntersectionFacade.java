@@ -3,6 +3,10 @@ package ch.travbit.game_engine.physics.shapes.intersection;
 import ch.travbit.game_engine.physics.shapes.Circle;
 import ch.travbit.game_engine.physics.shapes.Polygon;
 import ch.travbit.game_engine.physics.shapes.Shape;
+import ch.travbit.game_engine.physics.shapes.intersection.tester.Intersection;
+import ch.travbit.game_engine.physics.shapes.intersection.tester.IntersectionCircleCircle;
+import ch.travbit.game_engine.physics.shapes.intersection.tester.IntersectionPolygonCircle;
+import ch.travbit.game_engine.physics.shapes.intersection.tester.IntersectionPolygonPolygon;
 
 /**
  * This class represents a facade for intersection testing of shapes.
