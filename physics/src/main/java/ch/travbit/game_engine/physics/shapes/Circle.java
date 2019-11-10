@@ -24,4 +24,9 @@ public class Circle extends Shape {
     public void translate(Vector2f translation) {
         center.add(translation);
     }
+
+    @Override
+    public boolean intersectsWith(Shape otherShape) {
+        return false;
+    }
 }
