@@ -17,6 +17,7 @@ class IntersectionPolygonPolygonTest {
 
     @Test
     void testIntersection() {
+        createIntersectingPolygons();
         Intersection<Polygon, Polygon> intersection = new IntersectionPolygonPolygon(A, B);
         assertTrue(intersection.test());
     }
