@@ -64,4 +64,12 @@ public class Polygon extends Shape {
     public boolean intersectsWith(Shape otherShape) {
         return intersectionHandler.intersectWithShape(otherShape);
     }
+
+    @Override
+    public String toString() {
+        return "Polygon{" +
+                "vertices=" + vertices +
+                ", intersectionHandler=" + intersectionHandler +
+                '}';
+    }
 }
