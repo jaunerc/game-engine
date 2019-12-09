@@ -1,6 +1,7 @@
 package ch.travbit.game_engine.physics.shapes.intersection.tester;
 
 import ch.travbit.game_engine.physics.shapes.Circle;
+import org.joml.Intersectionf;
 
 /**
  * This class represents an intersection tester for two circles.
@@ -16,6 +17,8 @@ public class IntersectionCircleCircle extends Intersection<Circle, Circle> {
 
     @Override
     public boolean test() {
-        return false;
+        return Intersectionf.testCircleCircle(
+                getShapeA().getCenter(), getShapeA().getRadius(),
+                getShapeB().getCenter(), getShapeB().getRadius());
     }
 }
