@@ -3,6 +3,11 @@ package ch.travbit.game_engine.physics.shapes;
 import ch.travbit.game_engine.physics.shapes.intersection.handler.IntersectionHandler;
 import org.joml.Vector2f;
 
+/**
+ * This class represents the geometric figure Circle.
+ * <p>
+ * A circle is represented by a vector that points to the center and a radius.
+ */
 public class Circle extends Shape {
 
     private Vector2f center;
