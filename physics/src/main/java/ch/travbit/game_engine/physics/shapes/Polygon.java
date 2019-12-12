@@ -1,6 +1,6 @@
 package ch.travbit.game_engine.physics.shapes;
 
-import ch.travbit.game_engine.physics.shapes.intersection.handler.IntersectionHandler;
+import ch.travbit.game_engine.physics.shapes.intersection.IntersectionHandler;
 import org.joml.Vector2f;
 
 import java.util.ArrayList;
