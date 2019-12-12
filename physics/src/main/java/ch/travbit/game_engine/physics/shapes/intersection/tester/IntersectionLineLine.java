@@ -39,14 +39,30 @@ public class IntersectionLineLine extends Intersection<LineSegment, LineSegment>
         } else {
             /*
              * The two line segments are collinear. Either they are parallel and intersect at no point or intersect at
-             * infinitely many points. The second case should return true. Therefore the method checks for one point
-             * of the line segment B if this point can be on the line segment A or not. If not the line segments have
-             * to be parallel with no intersection since their slope is equal.
+             * infinitely many points. The second case should return true.
              */
-            boolean checkParallelP3 = p3.x > p1.x && p3.x > p2.x || p3.x < p1.x && p3.x < p2.x ||
-                    p3.y > p1.y && p3.y > p2.y || p3.y < p1.y && p3.y < p2.y;
-
-            return !checkParallelP3;
+            return !isPointOnLineSegment(p3, p1, p2);
         }
+    }
+
+    /**
+     * Indicates whether one point is on the line segment.
+     * <p>
+     * If two line segments are collinear either they are parallel and intersect at no point or intersect at
+     * infinitely many points. The method checks for one point of a line segment A if this point can be on a line
+     * segment B or not. If not the line segments have to be parallel with no intersection since their slope is equal.
+     *
+     * @param pointOfLineA the point to check if it is on the line segment B
+     * @param startLineB   the start point of the line segment
+     * @param endLineB     the end point of the line segment
+     * @return true if the point is on the line segment defined by startLineB and endLineB; false otherwise
+     */
+    private boolean isPointOnLineSegment(Vector2f pointOfLineA, Vector2f startLineB, Vector2f endLineB) {
+        boolean pointOnLineSegmentB =
+                pointOfLineA.x > startLineB.x && pointOfLineA.x > endLineB.x ||
+                        pointOfLineA.x < startLineB.x && pointOfLineA.x < endLineB.x ||
+                        pointOfLineA.y > startLineB.y && pointOfLineA.y > endLineB.y ||
+                        pointOfLineA.y < startLineB.y && pointOfLineA.y < endLineB.y;
+        return pointOnLineSegmentB;
     }
 }
