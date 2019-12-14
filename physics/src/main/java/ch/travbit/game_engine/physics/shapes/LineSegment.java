@@ -8,7 +8,7 @@ import org.joml.Vector2f;
  * <p>
  * A line segment is the line between a start and an end vector.
  */
-public class LineSegment extends Shape {
+public class LineSegment implements Shape {
 
     private Vector2f start;
     private Vector2f end;
@@ -26,6 +26,19 @@ public class LineSegment extends Shape {
     public void translate(Vector2f translation) {
         start.add(translation);
         end.add(translation);
+    }
+
+    /**
+     * Calculates the centroid of this line segment. This is just the point at the center of the line segment.
+     *
+     * @return the centroid
+     */
+    @Override
+    public Vector2f calcCentroid() {
+        Vector2f centroid = new Vector2f(
+                0.5f * (start.x + end.x),
+                0.5f * start.y + end.y);
+        return centroid;
     }
 
     @Override

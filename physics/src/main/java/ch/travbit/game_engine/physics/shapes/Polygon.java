@@ -9,13 +9,13 @@ import java.util.List;
 
 /**
  * This class represents the geometric figure polygon.
- *
+ * <p>
  * Each polygon is defined by its list of vertices. The vertices
  * are coordinate pairs and represented by a 2d vector. The order of the vertices in the list depends the edges of
  * the polygon. A vertex is connected with its neighbors in the list and the first vertex is also connected with the
  * last vertex.
  */
-public class Polygon extends Shape {
+public class Polygon implements Shape {
 
     private List<Vector2f> vertices;
     private IntersectionHandler<Polygon> intersectionHandler;
@@ -46,13 +46,73 @@ public class Polygon extends Shape {
             throw new IllegalArgumentException("The given values must be a list of coordinate pairs (x, y) and " +
                     "therefore the length of the list must be even.");
         }
-        for (int i = 0; i < values.length; i+=2) {
-            vertices.add(new Vector2f(values[i], values[i+1]));
+        for (int i = 0; i < values.length; i += 2) {
+            vertices.add(new Vector2f(values[i], values[i + 1]));
         }
     }
 
     public List<Vector2f> getVertices() {
         return vertices;
+    }
+
+    /**
+     * Calculates the centroid of this polygon. This is also known as the centre of gravity. The calculation is only
+     * correct if the polygon is not self intersecting.
+     *
+     * @return the centroid
+     * @see <a href="https://www.seas.upenn.edu/~sys502/extra_materials/Polygon%20Area%20and%20Centroid.pdf" />
+     */
+    @Override
+    public Vector2f calcCentroid() {
+        Vector2f centroid = new Vector2f();
+        Vector2f current;
+        Vector2f next;
+        float x = 0;
+        float y = 0;
+        for (int i = 0; i < vertices.size(); i++) {
+            current = vertices.get(i);
+            if (i == vertices.size() - 1) {
+                next = vertices.get(0);
+            } else {
+                next = vertices.get(i + 1);
+            }
+            float rightHandSide = (current.x * next.y - next.x * current.y);
+            x += (current.x + next.x) * rightHandSide;
+            y += (current.y + next.y) * rightHandSide;
+        }
+
+        float signedArea = calcSignedArea();
+
+        if (signedArea != 0) {
+            float multiplier = 1f / 6f * calcSignedArea();
+            centroid.set(x * multiplier, y * multiplier);
+        } else {
+            throw new ArithmeticException("The centroid of this polygon is not defined because the signed area is " +
+                    "zero");
+        }
+        return centroid;
+    }
+
+    /**
+     * Calculates the signed area for this polygon. Attention, the returned value can be 0.0.
+     *
+     * @return the signed area
+     */
+    private float calcSignedArea() {
+        Vector2f current;
+        Vector2f next;
+
+        float area = 0;
+        for (int i = 0; i < vertices.size(); i++) {
+            current = vertices.get(i);
+            if (i == vertices.size() - 1) {
+                next = vertices.get(0);
+            } else {
+                next = vertices.get(i + 1);
+            }
+            area += current.x * next.y - next.x * current.y;
+        }
+        return area * 0.5f;
     }
 
     @Override

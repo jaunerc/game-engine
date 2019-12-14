@@ -8,7 +8,7 @@ import org.joml.Vector2f;
  * <p>
  * A circle is represented by a vector that points to the center and a radius.
  */
-public class Circle extends Shape {
+public class Circle implements Shape {
 
     private Vector2f center;
     private float radius;
@@ -44,6 +44,16 @@ public class Circle extends Shape {
     @Override
     public void translate(Vector2f translation) {
         center.add(translation);
+    }
+
+    /**
+     * Calculates the centroid of this circle. This is just the center of the circle.
+     *
+     * @return the centroid
+     */
+    @Override
+    public Vector2f calcCentroid() {
+        return new Vector2f(center.x, center.y);
     }
 
     @Override
