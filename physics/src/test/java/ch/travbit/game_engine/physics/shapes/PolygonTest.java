@@ -15,6 +15,14 @@ public class PolygonTest {
     }
 
     @Test
+    public void testCorrectCentroidWithTriangle() {
+        Polygon triangle = new Polygon();
+        triangle.set(0f, 0f, 1f, 1f, 1f, 0f);
+        Vector2f expectedCentroid = new Vector2f(2f / 3, 1f / 3);
+        Assertions.assertEquals(expectedCentroid, triangle.calcCentroid());
+    }
+
+    @Test
     public void testCentroidWithZeroArea() {
         Polygon polygon = new Polygon();
         Assertions.assertThrows(ArithmeticException.class, polygon::calcCentroid);

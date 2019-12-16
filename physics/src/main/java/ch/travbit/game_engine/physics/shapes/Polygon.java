@@ -89,7 +89,7 @@ public class Polygon implements Shape {
         float signedArea = area * 0.5f;
 
         if (signedArea != 0) {
-            float multiplier = 1f / 6f * signedArea;
+            float multiplier = 1f / (6f * signedArea);
             centroid.set(x * multiplier, y * multiplier);
         } else {
             throw new ArithmeticException("The centroid of this polygon is not defined because the signed area is " +
