@@ -3,7 +3,6 @@ package ch.travbit.game_engine.physics.shapes.intersection.tester;
 import ch.travbit.game_engine.physics.shapes.Circle;
 import ch.travbit.game_engine.physics.shapes.LineSegment;
 import ch.travbit.game_engine.physics.shapes.Polygon;
-import org.joml.Intersectionf;
 import org.joml.Vector2f;
 
 import java.util.List;
@@ -80,35 +79,9 @@ public class IntersectionPolygonCircle extends Intersection<Polygon, Circle> {
      * @return true if the circle is whole inside the polygon; false otherwise
      */
     private boolean isCircleInsideThePolygon() {
-        Vector2f vertexA;
-        Vector2f vertexB;
         Vector2f circleCenter = getShapeB().getCenter();
-        Vector2f rayDirection = new Vector2f(1f, 0f); // ray direction to the right
         List<Vector2f> polygonVertices = getShapeA().getVertices();
 
-        /*
-         * the method Intersectionf.intersectRayLineSegment returns -1.0 if the ray does not intersect the line
-         * segment
-         */
-        final float RAY_NOT_INTERSECTING = -1.0f;
-
-        int intersectionCounter = 0;
-        for (int i = 0; i < polygonVertices.size(); i++) {
-            vertexA = polygonVertices.get(i);
-
-            if (i == polygonVertices.size() - 1) {
-                vertexB = polygonVertices.get(0);
-            } else {
-                vertexB = polygonVertices.get(i + 1);
-            }
-
-            float t = Intersectionf.intersectRayLineSegment(circleCenter, rayDirection, vertexA, vertexB);
-
-            if (t == RAY_NOT_INTERSECTING) {
-                intersectionCounter++;
-            }
-        }
-
-        return intersectionCounter % 2 != 0;
+        return isRayIntersectingOddNumberOfLines(circleCenter, polygonVertices);
     }
 }
