@@ -32,4 +32,10 @@ public class BodyTest {
             Assertions.assertEquals(expected.y, shapePosition.y, 0.001f);
         }, () -> Assertions.assertFalse(false));
     }
+
+    @Test
+    void testNoCollisionWhenNoShape() {
+        Body body = new Body();
+        Assertions.assertFalse(body.isCollidedWith(body));
+    }
 }
