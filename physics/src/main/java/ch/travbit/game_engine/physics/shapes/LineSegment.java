@@ -1,6 +1,5 @@
 package ch.travbit.game_engine.physics.shapes;
 
-import ch.travbit.game_engine.physics.shapes.intersection.IntersectionHandler;
 import org.joml.Vector2f;
 
 /**
@@ -12,7 +11,6 @@ public class LineSegment implements Shape {
 
     private Vector2f start;
     private Vector2f end;
-    private IntersectionHandler<LineSegment> intersectionHandler;
 
     public LineSegment() {
     }
