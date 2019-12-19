@@ -13,16 +13,9 @@ public class Circle implements Shape {
     private Vector2f center;
     private float radius;
 
-    private IntersectionHandler<Circle> intersectionHandler;
-
     public Circle() {
-        this(null);
-    }
-
-    public Circle(IntersectionHandler<Circle> intersectionHandler) {
         this.center = new Vector2f(0, 0);
         this.radius = 1f;
-        this.intersectionHandler = intersectionHandler;
     }
 
     public Vector2f getCenter() {
@@ -54,10 +47,5 @@ public class Circle implements Shape {
     @Override
     public Vector2f calcCentroid() {
         return new Vector2f(center.x, center.y);
-    }
-
-    @Override
-    public boolean intersectsWith(Shape otherShape) {
-        return intersectionHandler.intersectWithShape(otherShape);
     }
 }

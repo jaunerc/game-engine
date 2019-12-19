@@ -15,11 +15,6 @@ public class LineSegment implements Shape {
     private IntersectionHandler<LineSegment> intersectionHandler;
 
     public LineSegment() {
-        this(null);
-    }
-
-    public LineSegment(IntersectionHandler<LineSegment> intersectionHandler) {
-        this.intersectionHandler = intersectionHandler;
     }
 
     @Override
@@ -39,11 +34,6 @@ public class LineSegment implements Shape {
                 0.5f * (start.x + end.x),
                 0.5f * start.y + end.y);
         return centroid;
-    }
-
-    @Override
-    public boolean intersectsWith(Shape otherShape) {
-        return intersectionHandler.intersectWithShape(otherShape);
     }
 
     public Vector2f getStart() {

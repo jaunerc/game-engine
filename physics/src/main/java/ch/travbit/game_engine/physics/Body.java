@@ -1,6 +1,10 @@
 package ch.travbit.game_engine.physics;
 
+import ch.travbit.game_engine.physics.shapes.Circle;
+import ch.travbit.game_engine.physics.shapes.LineSegment;
+import ch.travbit.game_engine.physics.shapes.Polygon;
 import ch.travbit.game_engine.physics.shapes.Shape;
+import ch.travbit.game_engine.physics.shapes.intersection.IntersectionFacade;
 import org.joml.Vector2f;
 
 import java.util.ArrayList;
@@ -102,7 +106,8 @@ public class Body {
         boolean isCollided = false;
 
         if (other.getShape().isPresent() && getShape().isPresent()) {
-            isCollided = getShape().get().intersectsWith(other.getShape().get());
+            Shape myShape = getShape().get();
+            isCollided = IntersectionFacade.testShapeShape(myShape, other.getShape().get());
         }
 
         if (isCollided) {

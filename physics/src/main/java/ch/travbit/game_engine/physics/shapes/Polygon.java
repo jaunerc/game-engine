@@ -1,5 +1,6 @@
 package ch.travbit.game_engine.physics.shapes;
 
+import ch.travbit.game_engine.physics.shapes.intersection.IntersectionFacade;
 import ch.travbit.game_engine.physics.shapes.intersection.IntersectionHandler;
 import org.joml.Vector2f;
 
@@ -18,15 +19,9 @@ import java.util.List;
 public class Polygon implements Shape {
 
     private List<Vector2f> vertices;
-    private IntersectionHandler<Polygon> intersectionHandler;
 
     public Polygon() {
-        this(null);
-    }
-
-    public Polygon(IntersectionHandler<Polygon> intersectionHandler) {
         vertices = new ArrayList<>();
-        this.intersectionHandler = intersectionHandler;
     }
 
     /**
@@ -115,15 +110,9 @@ public class Polygon implements Shape {
     }
 
     @Override
-    public boolean intersectsWith(Shape otherShape) {
-        return intersectionHandler.intersectWithShape(otherShape);
-    }
-
-    @Override
     public String toString() {
         return "Polygon{" +
                 "vertices=" + vertices +
-                ", intersectionHandler=" + intersectionHandler +
                 '}';
     }
 }
