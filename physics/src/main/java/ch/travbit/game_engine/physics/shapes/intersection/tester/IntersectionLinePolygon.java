@@ -8,6 +8,10 @@ import java.util.List;
 
 public class IntersectionLinePolygon extends Intersection<LineSegment, Polygon> {
 
+    public IntersectionLinePolygon() {
+
+    }
+
     public IntersectionLinePolygon(LineSegment shapeA, Polygon shapeB) {
         super(shapeA, shapeB);
     }

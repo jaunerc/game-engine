@@ -11,6 +11,10 @@ import org.joml.Vector3f;
  */
 public class IntersectionLineCircle extends Intersection<LineSegment, Circle> {
 
+    public IntersectionLineCircle() {
+
+    }
+
     public IntersectionLineCircle(LineSegment shapeA, Circle shapeB) {
         super(shapeA, shapeB);
     }

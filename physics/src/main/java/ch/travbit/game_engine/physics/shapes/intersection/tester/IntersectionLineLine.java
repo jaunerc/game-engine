@@ -8,6 +8,10 @@ import org.joml.Vector2f;
  */
 public class IntersectionLineLine extends Intersection<LineSegment, LineSegment> {
 
+    public IntersectionLineLine() {
+
+    }
+
     public IntersectionLineLine(LineSegment shapeA, LineSegment shapeB) {
         super(shapeA, shapeB);
     }
