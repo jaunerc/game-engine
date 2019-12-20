@@ -12,6 +12,7 @@
         <module>rendering</module>
         <module>physics</module>
         <module>game</module>
+        <module>shape-app</module>
     </modules>
 
     <properties>
