@@ -62,11 +62,9 @@ class IntersectionLineLine extends Intersection<LineSegment, LineSegment> {
      * @return true if the point is on the line segment defined by startLineB and endLineB; false otherwise
      */
     private boolean isPointOnLineSegment(Vector2f pointOfLineA, Vector2f startLineB, Vector2f endLineB) {
-        boolean pointOnLineSegmentB =
-                pointOfLineA.x > startLineB.x && pointOfLineA.x > endLineB.x ||
-                        pointOfLineA.x < startLineB.x && pointOfLineA.x < endLineB.x ||
-                        pointOfLineA.y > startLineB.y && pointOfLineA.y > endLineB.y ||
-                        pointOfLineA.y < startLineB.y && pointOfLineA.y < endLineB.y;
-        return pointOnLineSegmentB;
+        return pointOfLineA.x > startLineB.x && pointOfLineA.x > endLineB.x ||
+                pointOfLineA.x < startLineB.x && pointOfLineA.x < endLineB.x ||
+                pointOfLineA.y > startLineB.y && pointOfLineA.y > endLineB.y ||
+                pointOfLineA.y < startLineB.y && pointOfLineA.y < endLineB.y;
     }
 }
