@@ -1,4 +1,4 @@
-package ch.travbit.game_engine.physics.shapes.intersection.tester;
+package ch.travbit.game_engine.physics.shapes.intersection;
 
 import ch.travbit.game_engine.physics.shapes.Shape;
 import org.joml.Intersectionf;
@@ -8,10 +8,11 @@ import java.util.List;
 
 /**
  * This class provides methods to test if a shape intersects with another shape.
+ *
  * @param <A> the first shape type
  * @param <B> the second shape type
  */
-public abstract class Intersection<A extends Shape, B extends Shape> {
+abstract class Intersection<A extends Shape, B extends Shape> {
 
     private A shapeA;
     private B shapeB;

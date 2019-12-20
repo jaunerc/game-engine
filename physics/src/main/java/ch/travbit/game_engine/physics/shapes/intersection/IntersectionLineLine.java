@@ -1,4 +1,4 @@
-package ch.travbit.game_engine.physics.shapes.intersection.tester;
+package ch.travbit.game_engine.physics.shapes.intersection;
 
 import ch.travbit.game_engine.physics.shapes.LineSegment;
 import org.joml.Vector2f;
@@ -6,7 +6,7 @@ import org.joml.Vector2f;
 /**
  * This class represents an intersection tester for two line segments.
  */
-public class IntersectionLineLine extends Intersection<LineSegment, LineSegment> {
+class IntersectionLineLine extends Intersection<LineSegment, LineSegment> {
 
     public IntersectionLineLine() {
 

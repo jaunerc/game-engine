@@ -4,7 +4,6 @@ import ch.travbit.game_engine.physics.shapes.Circle;
 import ch.travbit.game_engine.physics.shapes.LineSegment;
 import ch.travbit.game_engine.physics.shapes.Polygon;
 import ch.travbit.game_engine.physics.shapes.Shape;
-import ch.travbit.game_engine.physics.shapes.intersection.tester.*;
 
 public class IntersectionFacade {
 

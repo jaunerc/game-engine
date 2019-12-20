@@ -1,4 +1,4 @@
-package ch.travbit.game_engine.physics.shapes.intersection.tester;
+package ch.travbit.game_engine.physics.shapes.intersection;
 
 import ch.travbit.game_engine.physics.shapes.Circle;
 import ch.travbit.game_engine.physics.shapes.LineSegment;
@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * This class represents an intersection tester for a polygon and a circle.
  */
-public class IntersectionPolygonCircle extends Intersection<Polygon, Circle> {
+class IntersectionPolygonCircle extends Intersection<Polygon, Circle> {
 
 
     public IntersectionPolygonCircle(Polygon shapeA, Circle shapeB) {

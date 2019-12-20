@@ -1,4 +1,4 @@
-package ch.travbit.game_engine.physics.shapes.intersection.tester;
+package ch.travbit.game_engine.physics.shapes.intersection;
 
 import ch.travbit.game_engine.physics.shapes.LineSegment;
 import ch.travbit.game_engine.physics.shapes.Polygon;
@@ -6,7 +6,7 @@ import org.joml.Vector2f;
 
 import java.util.List;
 
-public class IntersectionLinePolygon extends Intersection<LineSegment, Polygon> {
+class IntersectionLinePolygon extends Intersection<LineSegment, Polygon> {
 
     public IntersectionLinePolygon() {
 
