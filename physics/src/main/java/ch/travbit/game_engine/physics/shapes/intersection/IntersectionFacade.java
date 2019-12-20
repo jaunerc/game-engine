@@ -5,6 +5,11 @@ import ch.travbit.game_engine.physics.shapes.LineSegment;
 import ch.travbit.game_engine.physics.shapes.Polygon;
 import ch.travbit.game_engine.physics.shapes.Shape;
 
+/**
+ * This class represents a facade for intersection testing between shapes.
+ * <p>
+ * There are several methods to test whether two shapes intersect or not.
+ */
 public class IntersectionFacade {
 
     private static Intersection<Polygon, Polygon> polygonPolygonIntersection;
@@ -14,6 +19,9 @@ public class IntersectionFacade {
     private static Intersection<LineSegment, Circle> lineSegmentCircleIntersection;
     private static Intersection<Circle, Circle> circleCircleIntersection;
 
+    /*
+     * Create instances for the test classes
+     */
     static {
         polygonPolygonIntersection = new IntersectionPolygonPolygon();
         polygonCircleIntersection = new IntersectionPolygonCircle();
@@ -26,6 +34,12 @@ public class IntersectionFacade {
     private IntersectionFacade() {
     }
 
+    /**
+     * Indicates whether the two shapes intersect or not.
+     * @param A the first shape
+     * @param B the second shape
+     * @return true if the shapes intersect; false otherwise
+     */
     public static boolean testShapeShape(Shape A, Shape B) {
         if (A instanceof Polygon) {
             return IntersectionFacade.testPolygonShape((Polygon) A, B);
@@ -70,9 +84,9 @@ public class IntersectionFacade {
         return false;
     }
 
-    private static <A extends Shape, B extends Shape> boolean test(Intersection<A, B> intersection, A A, B B) {
-        intersection.setShapeA(A);
-        intersection.setShapeB(B);
+    private static <A extends Shape, B extends Shape> boolean test(Intersection<A, B> intersection, A shapeA, B shapeB) {
+        intersection.setShapeA(shapeA);
+        intersection.setShapeB(shapeB);
         return intersection.test();
     }
 
