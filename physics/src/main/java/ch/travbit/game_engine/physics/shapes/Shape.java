@@ -32,6 +32,4 @@ public interface Shape {
      * @return the centroid
      */
     Vector2f calcCentroid();
-
-    boolean intersectsWith(Shape otherShape);
 }

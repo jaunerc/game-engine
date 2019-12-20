@@ -1,4 +1,4 @@
-package ch.travbit.game_engine.physics.shapes.intersection.tester;
+package ch.travbit.game_engine.physics.shapes.intersection;
 
 import ch.travbit.game_engine.physics.shapes.Circle;
 import ch.travbit.game_engine.physics.shapes.LineSegment;
@@ -9,7 +9,11 @@ import org.joml.Vector3f;
 /**
  * This class represents an intersection tester for line segments and circles.
  */
-public class IntersectionLineCircle extends Intersection<LineSegment, Circle> {
+class IntersectionLineCircle extends Intersection<LineSegment, Circle> {
+
+    public IntersectionLineCircle() {
+
+    }
 
     public IntersectionLineCircle(LineSegment shapeA, Circle shapeB) {
         super(shapeA, shapeB);

@@ -1,4 +1,4 @@
-package ch.travbit.game_engine.physics.shapes.intersection.tester;
+package ch.travbit.game_engine.physics.shapes.intersection;
 
 import ch.travbit.game_engine.physics.shapes.Circle;
 import org.joml.Intersectionf;
@@ -6,7 +6,7 @@ import org.joml.Intersectionf;
 /**
  * This class represents an intersection tester for two circles.
  */
-public class IntersectionCircleCircle extends Intersection<Circle, Circle> {
+class IntersectionCircleCircle extends Intersection<Circle, Circle> {
 
     public IntersectionCircleCircle(Circle shapeA, Circle shapeB) {
         super(shapeA, shapeB);

@@ -1,4 +1,4 @@
-package ch.travbit.game_engine.physics.shapes.intersection.tester;
+package ch.travbit.game_engine.physics.shapes.intersection;
 
 import ch.travbit.game_engine.physics.shapes.LineSegment;
 import org.joml.Vector2f;

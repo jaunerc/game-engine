@@ -1,4 +1,4 @@
-package ch.travbit.game_engine.physics.shapes.intersection.tester;
+package ch.travbit.game_engine.physics.shapes.intersection;
 
 import ch.travbit.game_engine.physics.shapes.LineSegment;
 import org.joml.Vector2f;
@@ -6,7 +6,11 @@ import org.joml.Vector2f;
 /**
  * This class represents an intersection tester for two line segments.
  */
-public class IntersectionLineLine extends Intersection<LineSegment, LineSegment> {
+class IntersectionLineLine extends Intersection<LineSegment, LineSegment> {
+
+    public IntersectionLineLine() {
+
+    }
 
     public IntersectionLineLine(LineSegment shapeA, LineSegment shapeB) {
         super(shapeA, shapeB);
@@ -58,11 +62,9 @@ public class IntersectionLineLine extends Intersection<LineSegment, LineSegment>
      * @return true if the point is on the line segment defined by startLineB and endLineB; false otherwise
      */
     private boolean isPointOnLineSegment(Vector2f pointOfLineA, Vector2f startLineB, Vector2f endLineB) {
-        boolean pointOnLineSegmentB =
-                pointOfLineA.x > startLineB.x && pointOfLineA.x > endLineB.x ||
-                        pointOfLineA.x < startLineB.x && pointOfLineA.x < endLineB.x ||
-                        pointOfLineA.y > startLineB.y && pointOfLineA.y > endLineB.y ||
-                        pointOfLineA.y < startLineB.y && pointOfLineA.y < endLineB.y;
-        return pointOnLineSegmentB;
+        return pointOfLineA.x > startLineB.x && pointOfLineA.x > endLineB.x ||
+                pointOfLineA.x < startLineB.x && pointOfLineA.x < endLineB.x ||
+                pointOfLineA.y > startLineB.y && pointOfLineA.y > endLineB.y ||
+                pointOfLineA.y < startLineB.y && pointOfLineA.y < endLineB.y;
     }
 }

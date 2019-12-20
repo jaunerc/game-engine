@@ -1,6 +1,5 @@
 package ch.travbit.game_engine.physics.shapes;
 
-import ch.travbit.game_engine.physics.shapes.intersection.IntersectionHandler;
 import org.joml.Vector2f;
 
 import java.util.ArrayList;
@@ -18,19 +17,14 @@ import java.util.List;
 public class Polygon implements Shape {
 
     private List<Vector2f> vertices;
-    private IntersectionHandler<Polygon> intersectionHandler;
 
     public Polygon() {
-        this(null);
-    }
-
-    public Polygon(IntersectionHandler<Polygon> intersectionHandler) {
         vertices = new ArrayList<>();
-        this.intersectionHandler = intersectionHandler;
     }
 
     /**
      * Set vertices for the polygon.
+     *
      * @param values Array of vertices (x,y)
      */
     public void set(Vector2f... values) {
@@ -39,6 +33,7 @@ public class Polygon implements Shape {
 
     /**
      * Set vertices for the polygon. The values are alternating x1, y1, x2, y2, ...
+     *
      * @param values Array of coordinates
      */
     public void set(Float... values) {
@@ -69,22 +64,25 @@ public class Polygon implements Shape {
         Vector2f next;
         float x = 0;
         float y = 0;
-        for (int i = 0; i < vertices.size(); i++) {
+        float area = 0;
+
+        /*
+         * The loop calculates the area between two vertices that are neighbors in the list of vertices. The last
+         * vertex is processed with the first vertex.
+         */
+        for (int i = 0, j = 1; i < vertices.size(); i++, j = (j + 1) % vertices.size()) {
             current = vertices.get(i);
-            if (i == vertices.size() - 1) {
-                next = vertices.get(0);
-            } else {
-                next = vertices.get(i + 1);
-            }
+            next = vertices.get(j);
             float rightHandSide = (current.x * next.y - next.x * current.y);
             x += (current.x + next.x) * rightHandSide;
             y += (current.y + next.y) * rightHandSide;
+            area += calcArea(current, next);
         }
 
-        float signedArea = calcSignedArea();
+        float signedArea = area * 0.5f;
 
         if (signedArea != 0) {
-            float multiplier = 1f / 6f * calcSignedArea();
+            float multiplier = 1f / (6f * signedArea);
             centroid.set(x * multiplier, y * multiplier);
         } else {
             throw new ArithmeticException("The centroid of this polygon is not defined because the signed area is " +
@@ -94,25 +92,14 @@ public class Polygon implements Shape {
     }
 
     /**
-     * Calculates the signed area for this polygon. Attention, the returned value can be 0.0.
+     * Calculates the area between the two vertices. Attention, the returned value can be 0.0.
      *
+     * @param vertexA the first vertex
+     * @param vertexB the second vertex
      * @return the signed area
      */
-    private float calcSignedArea() {
-        Vector2f current;
-        Vector2f next;
-
-        float area = 0;
-        for (int i = 0; i < vertices.size(); i++) {
-            current = vertices.get(i);
-            if (i == vertices.size() - 1) {
-                next = vertices.get(0);
-            } else {
-                next = vertices.get(i + 1);
-            }
-            area += current.x * next.y - next.x * current.y;
-        }
-        return area * 0.5f;
+    private float calcArea(Vector2f vertexA, Vector2f vertexB) {
+        return vertexA.x * vertexB.y - vertexB.x * vertexA.y;
     }
 
     @Override
@@ -121,15 +108,9 @@ public class Polygon implements Shape {
     }
 
     @Override
-    public boolean intersectsWith(Shape otherShape) {
-        return intersectionHandler.intersectWithShape(otherShape);
-    }
-
-    @Override
     public String toString() {
         return "Polygon{" +
                 "vertices=" + vertices +
-                ", intersectionHandler=" + intersectionHandler +
                 '}';
     }
 }
