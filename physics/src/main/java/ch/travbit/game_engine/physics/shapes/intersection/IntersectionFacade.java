@@ -70,8 +70,7 @@ public class IntersectionFacade {
         return false;
     }
 
-    @SuppressWarnings({"unchecked", "rawtypes"})
-    private static boolean test(Intersection intersection, Shape A, Shape B) {
+    private static <A extends Shape, B extends Shape> boolean test(Intersection<A, B> intersection, A A, B B) {
         intersection.setShapeA(A);
         intersection.setShapeB(B);
         return intersection.test();
