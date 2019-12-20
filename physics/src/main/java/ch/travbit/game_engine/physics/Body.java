@@ -1,8 +1,5 @@
 package ch.travbit.game_engine.physics;
 
-import ch.travbit.game_engine.physics.shapes.Circle;
-import ch.travbit.game_engine.physics.shapes.LineSegment;
-import ch.travbit.game_engine.physics.shapes.Polygon;
 import ch.travbit.game_engine.physics.shapes.Shape;
 import ch.travbit.game_engine.physics.shapes.intersection.IntersectionFacade;
 import org.joml.Vector2f;
@@ -85,6 +82,11 @@ public class Body {
 
     public Optional<Shape> getShape() {
         return Optional.ofNullable(shape);
+    }
+
+    public void setShape(Shape shape) {
+        this.shape = shape;
+        setPosition(getPosition());
     }
 
     /**
