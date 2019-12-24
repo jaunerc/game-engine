@@ -29,4 +29,15 @@ public class VectorToFloatBufferWrapper implements FloatBufferWrapper<Vector2f> 
     public Float[] toArray() {
         return floats.toArray(new Float[0]);
     }
+
+    @Override
+    public float[] toPrimitiveArray() {
+        float[] primitiveArray = new float[floats.size()];
+
+        for (int i = 0; i < floats.size(); i++) {
+            primitiveArray[i] = floats.get(i);
+        }
+
+        return primitiveArray;
+    }
 }

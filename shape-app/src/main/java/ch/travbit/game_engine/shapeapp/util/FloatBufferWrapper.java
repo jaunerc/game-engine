@@ -32,4 +32,11 @@ public interface FloatBufferWrapper<T> {
      * @return Float array
      */
     Float[] toArray();
+
+    /**
+     * Returns a new float array that contains the data that was added before.
+     *
+     * @return float array
+     */
+    float[] toPrimitiveArray();
 }
