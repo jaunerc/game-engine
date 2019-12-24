@@ -10,6 +10,22 @@ import java.util.List;
 public interface FloatBufferWrapper<T> {
 
     /**
+     * Wrap the given list of Float to an array of float
+     *
+     * @param floats a list of Float
+     * @return the array with unboxed float values
+     */
+    static float[] wrapToPrimitiveArray(List<Float> floats) {
+        float[] primitiveArray = new float[floats.size()];
+
+        for (int i = 0; i < floats.size(); i++) {
+            primitiveArray[i] = floats.get(i);
+        }
+
+        return primitiveArray;
+    }
+
+    /**
      * Adds the data object to the underlying data structure.
      *
      * @param data the data object
