@@ -5,10 +5,11 @@ import ch.travbit.game_engine.physics.Body;
 import ch.travbit.game_engine.physics.shapes.Polygon;
 import ch.travbit.game_engine.rendering.opengl.Mesh;
 import ch.travbit.game_engine.rendering.ui.RgbaColor;
+import ch.travbit.game_engine.shapeapp.util.FloatBufferWrapper;
+import ch.travbit.game_engine.shapeapp.util.IndicesToIntBufferWrapper;
+import ch.travbit.game_engine.shapeapp.util.RgbaColorToFloatBufferWrapper;
+import ch.travbit.game_engine.shapeapp.util.VectorToFloatBufferWrapper;
 import org.joml.Vector2f;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class PolygonEntity extends Entity {
 
@@ -16,6 +17,10 @@ public class PolygonEntity extends Entity {
     private Polygon polygonShape;
 
     private RgbaColor color;
+
+    private float[] vertices;
+    private int[] indices;
+    private float[] colors;
 
     public PolygonEntity(Mesh mesh) {
         super(mesh);
@@ -28,72 +33,55 @@ public class PolygonEntity extends Entity {
 
         color = RgbaColor.BLACK;
 
-        List<Float> floats = new ArrayList<>();
-        Vector2f centroid = polygonShape.calcCentroid();
-        floats.add(centroid.x);
-        floats.add(centroid.y);
-        polygonShape.getVertices().forEach(vector2f -> {
-            floats.add(vector2f.x);
-            floats.add(vector2f.y);
-        });
-
-        float[] vertices = new float[floats.size()];
-        for (int i = 0; i < vertices.length; i++) {
-            vertices[i] = floats.get(i);
-        }
-
-        int[] indices = calcIndices(vertices);
-
-        float[] colors = createColorArray(vertices);
+        defineVertices();
+        defineIndices(vertices);
+        defineColors(vertices);
 
         mesh.storeBuffers(vertices, colors, indices);
     }
 
-    public void setVertices(Float... values) {
-        polygonShape.set(values);
+    private void defineVertices() {
+        final FloatBufferWrapper<Vector2f> floatBufferWrapper = new VectorToFloatBufferWrapper();
+        final Vector2f centroid = polygonShape.calcCentroid();
+        floatBufferWrapper.add(centroid);
+        floatBufferWrapper.addAll(polygonShape.getVertices());
+        vertices = floatBufferWrapper.toPrimitiveArray();
     }
 
-    private int[] calcIndices(float[] vertices) {
-        List<Integer> indicesList = new ArrayList<>();
+    public void setVertices(Float... values) {
+        polygonShape.set(values);
+        defineVertices();
+    }
+
+    private void defineIndices(float[] vertices) {
+        IndicesToIntBufferWrapper wrapper = new IndicesToIntBufferWrapper();
 
         int centroidIndex = 0;
-
         int numVertices = vertices.length / 2;
 
         for (int i = 2; i < numVertices; i++) {
-            indicesList.add(centroidIndex);
-            indicesList.add(i - 1);
-            indicesList.add(i);
+            wrapper.add(centroidIndex);
+            wrapper.add(i - 1);
+            wrapper.add(i);
         }
-        indicesList.add(centroidIndex);
-        indicesList.add(numVertices - 1);
-        indicesList.add(1);
+        wrapper.add(centroidIndex);
+        wrapper.add(numVertices - 1);
+        wrapper.add(1);
 
 
-        return indicesList.stream().mapToInt(value -> value).toArray();
+        indices = wrapper.toPrimitiveArray();
     }
 
-    private float[] createColorArray(float[] vertices) {
-        List<Float> colorsList = new ArrayList<>();
+    private void defineColors(float[] vertices) {
+        FloatBufferWrapper<RgbaColor> wrapper = new RgbaColorToFloatBufferWrapper();
 
         int numVertices = vertices.length / 2;
 
         for (int i = 0; i < numVertices; i++) {
-            colorsList.add(color.getR());
-            colorsList.add(color.getG());
-            colorsList.add(color.getB());
-            colorsList.add(color.getA());
+            wrapper.add(color);
         }
-        colorsList.add(color.getR());
-        colorsList.add(color.getG());
-        colorsList.add(color.getB());
-        colorsList.add(color.getA());
-
-        float[] colors = new float[colorsList.size()];
-        for (int i = 0; i < colors.length; i++) {
-            colors[i] = colorsList.get(i);
-        }
-        return colors;
+        wrapper.add(color);
+        colors = wrapper.toPrimitiveArray();
     }
 
     @Override
