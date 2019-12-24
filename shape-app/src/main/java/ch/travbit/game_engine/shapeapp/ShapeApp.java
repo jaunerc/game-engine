@@ -2,6 +2,8 @@ package ch.travbit.game_engine.shapeapp;
 
 import ch.travbit.game_engine.game.Entity;
 import ch.travbit.game_engine.game.Game;
+import ch.travbit.game_engine.physics.Body;
+import ch.travbit.game_engine.physics.shapes.Polygon;
 import ch.travbit.game_engine.rendering.opengl.Mesh;
 import ch.travbit.game_engine.rendering.opengl.variables.Attribute;
 import ch.travbit.game_engine.rendering.opengl.variables.Loader;
@@ -34,7 +36,13 @@ public class ShapeApp implements Game {
         final Attribute colorAttribute = loader.loadAttribute("vertexColor", GL_FLOAT, 4);
         final Mesh mesh = new Mesh(posAttribute, colorAttribute);
 
-        PolygonEntity polygonEntity = new PolygonEntity(mesh);
+        Polygon polygon = new Polygon();
+        polygon.set(0f, 0f, 1f, 1f, 1f, -1f);
+
+        Body body = new Body();
+        body.setShape(polygon);
+
+        PolygonEntity polygonEntity = new PolygonEntity(mesh, body);
 
         entities.add(polygonEntity);
     }

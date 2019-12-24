@@ -14,7 +14,6 @@ import org.joml.Vector2f;
 public class PolygonEntity extends Entity {
 
     private Body body;
-    private Polygon polygonShape;
 
     private RgbaColor color;
 
@@ -23,13 +22,12 @@ public class PolygonEntity extends Entity {
     private float[] colors;
 
     public PolygonEntity(Mesh mesh) {
+        this(mesh, new Body());
+    }
+
+    public PolygonEntity(Mesh mesh, Body body) {
         super(mesh);
-
-        polygonShape = new Polygon();
-        polygonShape.set(0f, 0f, 0f, 3f, 1f, 1f, 1f, 0f);
-
-        body = new Body();
-        body.setShape(polygonShape);
+        this.body = body;
 
         color = RgbaColor.BLACK;
 
@@ -41,16 +39,16 @@ public class PolygonEntity extends Entity {
     }
 
     private void defineVertices() {
-        final FloatBufferWrapper<Vector2f> floatBufferWrapper = new VectorToFloatBufferWrapper();
-        final Vector2f centroid = polygonShape.calcCentroid();
-        floatBufferWrapper.add(centroid);
-        floatBufferWrapper.addAll(polygonShape.getVertices());
-        vertices = floatBufferWrapper.toPrimitiveArray();
-    }
-
-    public void setVertices(Float... values) {
-        polygonShape.set(values);
-        defineVertices();
+        if (body.getShape().isPresent() && body.getShape().get() instanceof Polygon) {
+            Polygon polygonShape = (Polygon) body.getShape().get();
+            final FloatBufferWrapper<Vector2f> floatBufferWrapper = new VectorToFloatBufferWrapper();
+            final Vector2f centroid = polygonShape.calcCentroid();
+            floatBufferWrapper.add(centroid);
+            floatBufferWrapper.addAll(polygonShape.getVertices());
+            vertices = floatBufferWrapper.toPrimitiveArray();
+        } else {
+            vertices = new float[0];
+        }
     }
 
     private void defineIndices(float[] vertices) {
