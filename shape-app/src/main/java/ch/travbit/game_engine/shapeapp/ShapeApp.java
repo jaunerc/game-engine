@@ -45,6 +45,22 @@ public class ShapeApp implements Game {
         PolygonEntity polygonEntity = new PolygonEntity(mesh, body);
 
         entities.add(polygonEntity);
+
+        Polygon polygonB = new Polygon();
+        polygonB.set(0f, 0f, 1f, 1f, 1f, -1f);
+
+        Body bodyB = new Body();
+        bodyB.setShape(polygonB);
+
+        Mesh meshB = new Mesh(posAttribute, colorAttribute);
+        PolygonEntity polygonEntityB = new PolygonEntity(meshB, bodyB);
+        //polygonEntityB.setPosition(new Vector3f(.5f, .5f, 0f));
+        polygonEntityB.setPosition(new Vector3f(1.1f, 1.1f, 0f));
+        bodyB.addCollisionObserver(polygonEntityB);
+
+        entities.add(polygonEntityB);
+
+        bodyB.isCollidedWith(bodyB);
     }
 
     @Override

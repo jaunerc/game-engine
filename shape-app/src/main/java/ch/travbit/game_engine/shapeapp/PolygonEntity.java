@@ -2,6 +2,7 @@ package ch.travbit.game_engine.shapeapp;
 
 import ch.travbit.game_engine.game.Entity;
 import ch.travbit.game_engine.physics.Body;
+import ch.travbit.game_engine.physics.CollisionObserver;
 import ch.travbit.game_engine.physics.shapes.Polygon;
 import ch.travbit.game_engine.rendering.opengl.Mesh;
 import ch.travbit.game_engine.rendering.ui.RgbaColor;
@@ -10,8 +11,9 @@ import ch.travbit.game_engine.shapeapp.util.IndicesToIntBufferWrapper;
 import ch.travbit.game_engine.shapeapp.util.RgbaColorToFloatBufferWrapper;
 import ch.travbit.game_engine.shapeapp.util.VectorToFloatBufferWrapper;
 import org.joml.Vector2f;
+import org.joml.Vector3f;
 
-public class PolygonEntity extends Entity {
+public class PolygonEntity extends Entity implements CollisionObserver {
 
     private Body body;
 
@@ -85,5 +87,16 @@ public class PolygonEntity extends Entity {
     @Override
     public void update() {
 
+    }
+
+    @Override
+    public void setPosition(Vector3f position) {
+        super.setPosition(position);
+        body.setPosition(getPosition().x, getPosition().y);
+    }
+
+    @Override
+    public void reactOnCollision() {
+        System.out.println("Polygon collided: " + body.getShape().get());
     }
 }
