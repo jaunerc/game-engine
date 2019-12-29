@@ -31,7 +31,7 @@ public class PolygonEntity extends Entity implements CollisionObserver {
         super(mesh);
         this.body = body;
 
-        color = RgbaColor.BLACK;
+        color = RgbaColor.randomColorNoTransparency();
 
         defineVertices();
         defineIndices(vertices);
