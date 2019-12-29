@@ -3,6 +3,7 @@ package ch.travbit.game_engine.shapeapp;
 import ch.travbit.game_engine.game.Entity;
 import ch.travbit.game_engine.game.Game;
 import ch.travbit.game_engine.physics.Body;
+import ch.travbit.game_engine.physics.PhysicalWorld;
 import ch.travbit.game_engine.physics.shapes.Polygon;
 import ch.travbit.game_engine.rendering.opengl.Mesh;
 import ch.travbit.game_engine.rendering.opengl.variables.Attribute;
@@ -13,6 +14,7 @@ import org.joml.Vector3f;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import static org.lwjgl.opengl.GL11.GL_FLOAT;
 
@@ -21,6 +23,8 @@ public class ShapeApp implements Game {
     private List<Entity> entities;
     private Uniform<Matrix3f> transformMatrix;
     private Uniform<Matrix3f> projectionMatrix;
+
+    private PhysicalWorld physicalWorld;
 
     public ShapeApp() {
         entities = new ArrayList<>();
@@ -36,36 +40,33 @@ public class ShapeApp implements Game {
         final Attribute colorAttribute = loader.loadAttribute("vertexColor", GL_FLOAT, 4);
         final Mesh mesh = new Mesh(posAttribute, colorAttribute);
 
+        physicalWorld = new PhysicalWorld();
+
+        for (int i = 0; i < 5; i++) {
+            createPolygonAtRandomPosition(new Mesh(posAttribute, colorAttribute));
+        }
+    }
+
+    private void createPolygonAtRandomPosition(Mesh mesh) {
         Polygon polygon = new Polygon();
         polygon.set(0f, 0f, 1f, 1f, 1f, -1f);
+        Body body = physicalWorld.createBody(polygon);
 
-        Body body = new Body();
-        body.setShape(polygon);
+        Random random = new Random();
+        float randX = (random.nextFloat() * 4) - 2f;
+        float randY = (random.nextFloat() * 4) - 2f;
+
+        body.setPosition(randX, randY);
 
         PolygonEntity polygonEntity = new PolygonEntity(mesh, body);
+        body.addCollisionObserver(polygonEntity);
 
         entities.add(polygonEntity);
-
-        Polygon polygonB = new Polygon();
-        polygonB.set(0f, 0f, 1f, 1f, 1f, -1f);
-
-        Body bodyB = new Body();
-        bodyB.setShape(polygonB);
-
-        Mesh meshB = new Mesh(posAttribute, colorAttribute);
-        PolygonEntity polygonEntityB = new PolygonEntity(meshB, bodyB);
-        //polygonEntityB.setPosition(new Vector3f(.5f, .5f, 0f));
-        polygonEntityB.setPosition(new Vector3f(1.1f, 1.1f, 0f));
-        bodyB.addCollisionObserver(polygonEntityB);
-
-        entities.add(polygonEntityB);
-
-        bodyB.isCollidedWith(bodyB);
     }
 
     @Override
     public void update(float deltaMillis) {
-
+        physicalWorld.update(deltaMillis);
     }
 
     @Override
