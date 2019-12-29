@@ -57,16 +57,6 @@ public class Body {
     }
 
     /**
-     * Sets the position of this body directly to the given position vector.
-     *
-     * @param position the new position of the body
-     */
-    public void setPosition(Vector2f position) {
-        this.position = position;
-        getShape().ifPresent(shape -> shape.setShapeAtPosition(position));
-    }
-
-    /**
      * Sets the position of this body directly by the given cartesian coordinates.
      *
      * @param x position on the x-axis
@@ -78,6 +68,16 @@ public class Body {
 
     public Vector2f getPosition() {
         return new Vector2f(position);
+    }
+
+    /**
+     * Sets the position of this body directly to the given position vector.
+     *
+     * @param position the new position of the body
+     */
+    public void setPosition(Vector2f position) {
+        this.position = position;
+        getShape().ifPresent(shape -> shape.setShapeAtPosition(position));
     }
 
     public Optional<Shape> getShape() {
@@ -99,7 +99,16 @@ public class Body {
     }
 
     /**
+     * Notifies all observers that this body is collided.
+     */
+    private void notifyCollisionObservers() {
+        collisionObservers.forEach(CollisionObserver::reactOnCollision);
+    }
+
+    /**
      * Whether this body has collided with the other body.
+     * <p>
+     * If there's a collision the collision observers from both bodies are notified.
      *
      * @param other the other body to check for collision
      * @return true if this body collided with the other body; false otherwise
@@ -113,9 +122,32 @@ public class Body {
         }
 
         if (isCollided) {
-            collisionObservers.forEach(CollisionObserver::reactOnCollision);
+            notifyCollisionObservers();
+            other.notifyCollisionObservers();
         }
 
         return isCollided;
+    }
+
+    /**
+     * Checks for all other bodies in the list if this body is collided.
+     * <p>
+     * If this body has no shape or the given list is null the method does nothing because a collision check is then
+     * not possible. If this and another body is collided the collision observers from both bodies are notified.
+     *
+     * @param otherBodies a list with bodies
+     */
+    public void checkCollisionWithAll(List<Body> otherBodies) {
+        if (getShape().isPresent() && otherBodies != null) {
+            Shape myShape = getShape().get();
+            otherBodies.forEach(other -> {
+                if (other.getShape().isPresent()) {
+                    if (IntersectionFacade.testShapeShape(myShape, other.getShape().get())) {
+                        notifyCollisionObservers();
+                        other.notifyCollisionObservers();
+                    }
+                }
+            });
+        }
     }
 }
