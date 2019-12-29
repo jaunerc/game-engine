@@ -38,7 +38,7 @@ public class PolygonEntity extends Entity implements CollisionObserver {
         defineColors(vertices);
 
         mesh.storeBuffers(vertices, colors, indices);
-    }
+}
 
     private void defineVertices() {
         if (body.getShape().isPresent() && body.getShape().get() instanceof Polygon) {
@@ -86,7 +86,8 @@ public class PolygonEntity extends Entity implements CollisionObserver {
 
     @Override
     public void update() {
-
+        defineColors(vertices);
+        getMesh().storeBuffers(vertices, colors, indices);
     }
 
     @Override
@@ -97,6 +98,6 @@ public class PolygonEntity extends Entity implements CollisionObserver {
 
     @Override
     public void reactOnCollision() {
-        System.out.println("Polygon collided: " + body.getShape().get());
+        color.set(1f, 0f, 0f, 1f);
     }
 }
