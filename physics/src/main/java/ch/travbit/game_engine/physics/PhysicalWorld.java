@@ -38,9 +38,10 @@ public class PhysicalWorld {
     /**
      * Updates the world.
      *
-     * @param deltaMillis The delta in milliseconds since the last invocation of this method
+     * @param deltaNanos The delta in nanoseconds since the last invocation of this method
      */
-    public void update(float deltaMillis) {
+    public void update(float deltaNanos) {
+        bodies.forEach(b -> b.update(deltaNanos));
         checkCollisions();
     }
 

@@ -13,9 +13,10 @@ public interface Game {
 
     /**
      * Update the game entities.
-     * @param deltaMillis The delta in milliseconds since the last invocation of this method
+     *
+     * @param deltaNanos The delta in nanoseconds since the last invocation of this method
      */
-    void update(float deltaMillis);
+    void update(float deltaNanos);
 
     /**
      * Render the game.
