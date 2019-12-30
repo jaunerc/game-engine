@@ -5,6 +5,7 @@ import ch.travbit.game_engine.game.Game;
 import ch.travbit.game_engine.physics.Body;
 import ch.travbit.game_engine.physics.CollisionObserver;
 import ch.travbit.game_engine.physics.PhysicalWorld;
+import ch.travbit.game_engine.physics.shapes.LineSegment;
 import ch.travbit.game_engine.physics.shapes.Polygon;
 import ch.travbit.game_engine.rendering.opengl.Mesh;
 import ch.travbit.game_engine.rendering.opengl.variables.Attribute;
@@ -42,13 +43,14 @@ public class ShapeApp implements Game {
 
         physicalWorld = new PhysicalWorld();
 
+        addBoundaries();
+
         for (int i = 0; i < 5; i++) {
             createPolygonAtRandomPosition(new Mesh(posAttribute, colorAttribute));
         }
     }
 
     private void createPolygonAtRandomPosition(Mesh mesh) {
-        CollisionObserver collisionObserver = new ShapeAppCollisionObserver();
         Polygon polygon = new Polygon();
         polygon.set(0f, 0f, 1f, 1f, 1f, -1f);
         Body body = physicalWorld.createBody(polygon);
@@ -59,11 +61,39 @@ public class ShapeApp implements Game {
 
         body.setPosition(randX, randY);
         body.setVelocity(random.nextFloat() * .001f, random.nextFloat() * .001f);
-        body.addCollisionObserver(collisionObserver);
 
         PolygonEntity polygonEntity = new PolygonEntity(mesh, body);
 
         entities.add(polygonEntity);
+    }
+
+    private void addBoundaries() {
+        LineSegment horizontalLine = new LineSegment();
+        horizontalLine.set(0f, 0f, 4f, 0f);
+        LineSegment verticalLine = new LineSegment();
+        verticalLine.set(0f, 0f, 0f, 4f);
+
+        float pos = 3f;
+
+        CollisionObserver collisionObserver = new ShapeAppCollisionObserver(0f, -1f);
+        Body top = physicalWorld.createBody(new LineSegment(horizontalLine));
+        top.setPosition(0f, pos);
+        top.addCollisionObserver(collisionObserver);
+
+        collisionObserver = new ShapeAppCollisionObserver(-1f, 0f);
+        Body right = physicalWorld.createBody(new LineSegment(verticalLine));
+        right.setPosition(pos, 0f);
+        right.addCollisionObserver(collisionObserver);
+
+        collisionObserver = new ShapeAppCollisionObserver(0f, -1f);
+        Body bottom = physicalWorld.createBody(new LineSegment(horizontalLine));
+        bottom.setPosition(0f, -pos);
+        bottom.addCollisionObserver(collisionObserver);
+
+        collisionObserver = new ShapeAppCollisionObserver(-1f, 0f);
+        Body left = physicalWorld.createBody(new LineSegment(verticalLine));
+        left.setPosition(-pos, 0f);
+        left.addCollisionObserver(collisionObserver);
     }
 
     @Override
