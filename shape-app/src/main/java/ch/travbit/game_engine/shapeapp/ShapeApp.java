@@ -38,7 +38,6 @@ public class ShapeApp implements Game {
 
         final Attribute posAttribute = loader.loadAttribute("vertexPosition", GL_FLOAT, 2);
         final Attribute colorAttribute = loader.loadAttribute("vertexColor", GL_FLOAT, 4);
-        final Mesh mesh = new Mesh(posAttribute, colorAttribute);
 
         physicalWorld = new PhysicalWorld();
 
@@ -57,6 +56,7 @@ public class ShapeApp implements Game {
         float randY = (random.nextFloat() * 4) - 2f;
 
         body.setPosition(randX, randY);
+        body.setVelocity(.001f, .001f);
 
         PolygonEntity polygonEntity = new PolygonEntity(mesh, body);
         body.addCollisionObserver(polygonEntity);

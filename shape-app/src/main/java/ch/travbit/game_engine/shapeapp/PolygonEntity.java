@@ -86,6 +86,8 @@ public class PolygonEntity extends Entity implements CollisionObserver {
 
     @Override
     public void update() {
+        defineVertices();
+        defineIndices(vertices);
         defineColors(vertices);
         getMesh().storeBuffers(vertices, colors, indices);
     }

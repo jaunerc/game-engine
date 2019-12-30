@@ -16,7 +16,7 @@ import java.util.Optional;
  */
 public class Body {
 
-    private Vector2f position;
+    private Vector2f position, velocity;
     private Shape shape;
 
     private List<CollisionObserver> collisionObservers;
@@ -32,6 +32,7 @@ public class Body {
     public Body(Vector2f position, Shape shape) {
         this.position = position;
         this.shape = shape;
+        velocity = new Vector2f(0f, 0f);
         collisionObservers = new ArrayList<>();
         setPosition(position);
     }
@@ -68,6 +69,18 @@ public class Body {
 
     public Vector2f getPosition() {
         return new Vector2f(position);
+    }
+
+    public Vector2f getVelocity() {
+        return velocity;
+    }
+
+    public void setVelocity(Vector2f velocity) {
+        this.velocity = velocity;
+    }
+
+    public void setVelocity(float x, float y) {
+        setVelocity(new Vector2f(x, y));
     }
 
     /**
@@ -149,5 +162,12 @@ public class Body {
                 }
             });
         }
+    }
+
+    public void update(float deltaNanos) {
+        float factor = deltaNanos / 1_000_000f;
+        float deltaX = velocity.x() * factor;
+        float deltaY = velocity.y() * factor;
+        translate(deltaX, deltaY);
     }
 }
