@@ -12,5 +12,5 @@ public interface CollisionObserver {
      * <p>
      * A collision has occurred and the observer is notified.
      */
-    void reactOnCollision();
+    void reactOnCollision(Body myBody, Body otherBody);
 }

@@ -3,6 +3,7 @@ package ch.travbit.game_engine.shapeapp;
 import ch.travbit.game_engine.game.Entity;
 import ch.travbit.game_engine.game.Game;
 import ch.travbit.game_engine.physics.Body;
+import ch.travbit.game_engine.physics.CollisionObserver;
 import ch.travbit.game_engine.physics.PhysicalWorld;
 import ch.travbit.game_engine.physics.shapes.Polygon;
 import ch.travbit.game_engine.rendering.opengl.Mesh;
@@ -47,6 +48,7 @@ public class ShapeApp implements Game {
     }
 
     private void createPolygonAtRandomPosition(Mesh mesh) {
+        CollisionObserver collisionObserver = new ShapeAppCollisionObserver();
         Polygon polygon = new Polygon();
         polygon.set(0f, 0f, 1f, 1f, 1f, -1f);
         Body body = physicalWorld.createBody(polygon);
@@ -56,10 +58,10 @@ public class ShapeApp implements Game {
         float randY = (random.nextFloat() * 4) - 2f;
 
         body.setPosition(randX, randY);
-        body.setVelocity(.001f, .001f);
+        body.setVelocity(random.nextFloat() * .001f, random.nextFloat() * .001f);
+        body.addCollisionObserver(collisionObserver);
 
         PolygonEntity polygonEntity = new PolygonEntity(mesh, body);
-        body.addCollisionObserver(polygonEntity);
 
         entities.add(polygonEntity);
     }

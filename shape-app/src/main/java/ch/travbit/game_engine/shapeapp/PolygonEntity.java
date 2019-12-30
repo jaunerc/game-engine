@@ -2,7 +2,6 @@ package ch.travbit.game_engine.shapeapp;
 
 import ch.travbit.game_engine.game.Entity;
 import ch.travbit.game_engine.physics.Body;
-import ch.travbit.game_engine.physics.CollisionObserver;
 import ch.travbit.game_engine.physics.shapes.Polygon;
 import ch.travbit.game_engine.rendering.opengl.Mesh;
 import ch.travbit.game_engine.rendering.ui.RgbaColor;
@@ -13,11 +12,11 @@ import ch.travbit.game_engine.shapeapp.util.VectorToFloatBufferWrapper;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
 
-public class PolygonEntity extends Entity implements CollisionObserver {
+public class PolygonEntity extends Entity {
 
     private Body body;
 
-    private RgbaColor color;
+    private RgbaColor currentColor, polygonColor, collisionColor;
 
     private float[] vertices;
     private int[] indices;
@@ -31,14 +30,17 @@ public class PolygonEntity extends Entity implements CollisionObserver {
         super(mesh);
         this.body = body;
 
-        color = RgbaColor.randomColorNoTransparency();
+        currentColor = RgbaColor.randomColorNoTransparency();
+        collisionColor = new RgbaColor(1f, 0f, 0f, 1f);
+        polygonColor = new RgbaColor();
+        polygonColor.set(currentColor.asVector());
 
         defineVertices();
         defineIndices(vertices);
         defineColors(vertices);
 
         mesh.storeBuffers(vertices, colors, indices);
-}
+    }
 
     private void defineVertices() {
         if (body.getShape().isPresent() && body.getShape().get() instanceof Polygon) {
@@ -78,14 +80,19 @@ public class PolygonEntity extends Entity implements CollisionObserver {
         int numVertices = vertices.length / 2;
 
         for (int i = 0; i < numVertices; i++) {
-            wrapper.add(color);
+            wrapper.add(currentColor);
         }
-        wrapper.add(color);
+        wrapper.add(currentColor);
         colors = wrapper.toPrimitiveArray();
     }
 
     @Override
     public void update() {
+        if (body.isInCollision()) {
+            currentColor.set(collisionColor.asVector());
+        } else {
+            currentColor.set(polygonColor.asVector());
+        }
         defineVertices();
         defineIndices(vertices);
         defineColors(vertices);
@@ -96,10 +103,5 @@ public class PolygonEntity extends Entity implements CollisionObserver {
     public void setPosition(Vector3f position) {
         super.setPosition(position);
         body.setPosition(getPosition().x, getPosition().y);
-    }
-
-    @Override
-    public void reactOnCollision() {
-        color.set(1f, 0f, 0f, 1f);
     }
 }

@@ -16,6 +16,8 @@ import java.util.Optional;
  */
 public class Body {
 
+    private boolean isInCollision;
+
     private Vector2f position, velocity;
     private Shape shape;
 
@@ -83,6 +85,10 @@ public class Body {
         setVelocity(new Vector2f(x, y));
     }
 
+    public boolean isInCollision() {
+        return isInCollision;
+    }
+
     /**
      * Sets the position of this body directly to the given position vector.
      *
@@ -114,8 +120,9 @@ public class Body {
     /**
      * Notifies all observers that this body is collided.
      */
-    private void notifyCollisionObservers() {
-        collisionObservers.forEach(CollisionObserver::reactOnCollision);
+    private void notifyCollisionObservers(Body other) {
+        isInCollision = true;
+        collisionObservers.forEach(observer -> observer.reactOnCollision(this, other));
     }
 
     /**
@@ -135,8 +142,8 @@ public class Body {
         }
 
         if (isCollided) {
-            notifyCollisionObservers();
-            other.notifyCollisionObservers();
+            notifyCollisionObservers(other);
+            other.notifyCollisionObservers(this);
         }
 
         return isCollided;
@@ -156,8 +163,8 @@ public class Body {
             otherBodies.forEach(other -> {
                 if (other.getShape().isPresent()) {
                     if (IntersectionFacade.testShapeShape(myShape, other.getShape().get())) {
-                        notifyCollisionObservers();
-                        other.notifyCollisionObservers();
+                        notifyCollisionObservers(other);
+                        other.notifyCollisionObservers(this);
                     }
                 }
             });
@@ -165,6 +172,7 @@ public class Body {
     }
 
     public void update(float deltaNanos) {
+        isInCollision = false;
         float factor = deltaNanos / 1_000_000f;
         float deltaX = velocity.x() * factor;
         float deltaY = velocity.y() * factor;
