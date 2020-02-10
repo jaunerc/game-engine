@@ -30,34 +30,60 @@ public class Mesh {
         verticesBufferId = -1;
         indicesBufferId = -1;
         colorsBufferId = -1;
-        indicesCount = 0;
+        setIndicesCount(0);
+    }
+
+    public void setIndicesCount(int indicesCount) {
+        this.indicesCount = indicesCount;
     }
 
     /**
      * Saves the given vertices and indices to the OpenGL buffers.
+     *
      * @param vertices a list of vertices
-     * @param colors a list of rgba colors
-     * @param indices a list of indices
+     * @param colors   a list of rgba colors
+     * @param indices  a list of indices
      */
     public void storeBuffers(float[] vertices, float[] colors, int[] indices) {
-        FloatBuffer verticesBuffer = null;
-        FloatBuffer colorsBuffer = null;
-        IntBuffer indicesBuffer = null;
+        storeVerticesBuffer(vertices);
+        storeColorsBuffer(colors);
+        storeIndicesBuffer(indices);
+    }
 
+    public void storeVerticesBuffer(float[] vertices) {
+        FloatBuffer verticesBuffer = null;
         try {
             verticesBufferId = glGenBuffers();
             verticesBuffer = MemoryUtil.memAllocFloat(vertices.length);
             verticesBuffer.put(vertices).flip();
             glBindBuffer(GL_ARRAY_BUFFER, verticesBufferId);
             glBufferData(GL_ARRAY_BUFFER, verticesBuffer, GL_STATIC_DRAW);
+        } finally {
+            if (verticesBuffer != null) {
+                MemoryUtil.memFree(verticesBuffer);
+            }
+        }
+    }
 
+    public void storeColorsBuffer(float[] colors) {
+        FloatBuffer colorsBuffer = null;
+        try {
             colorsBufferId = glGenBuffers();
             colorsBuffer = MemoryUtil.memAllocFloat(colors.length);
             colorsBuffer.put(colors).flip();
             glBindBuffer(GL_ARRAY_BUFFER, colorsBufferId);
             glBufferData(GL_ARRAY_BUFFER, colorsBuffer, GL_STATIC_DRAW);
+        } finally {
+            if (colorsBuffer != null) {
+                MemoryUtil.memFree(colorsBuffer);
+            }
+        }
+    }
 
-            indicesCount = indices.length;
+    public void storeIndicesBuffer(int[] indices) {
+        IntBuffer indicesBuffer = null;
+        try {
+            setIndicesCount(indices.length);
 
             indicesBufferId = glGenBuffers();
             indicesBuffer = MemoryUtil.memAllocInt(indicesCount);
@@ -65,12 +91,6 @@ public class Mesh {
             glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indicesBufferId);
             glBufferData(GL_ELEMENT_ARRAY_BUFFER, indicesBuffer, GL_STATIC_DRAW);
         } finally {
-            if (verticesBuffer != null) {
-                MemoryUtil.memFree(verticesBuffer);
-            }
-            if (colorsBuffer != null) {
-                MemoryUtil.memFree(colorsBuffer);
-            }
             if (indicesBuffer != null) {
                 MemoryUtil.memFree(indicesBuffer);
             }
