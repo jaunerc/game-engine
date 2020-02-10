@@ -45,7 +45,7 @@ public class ShapeApp implements Game {
 
         addBoundaries();
 
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 2; i++) {
             createPolygonAtRandomPosition(new Mesh(posAttribute, colorAttribute));
         }
     }
@@ -54,15 +54,14 @@ public class ShapeApp implements Game {
         Polygon polygon = new Polygon();
         polygon.set(0f, 0f, 1f, 1f, 1f, -1f);
         Body body = physicalWorld.createBody(polygon);
+        PolygonEntity polygonEntity = new PolygonEntity(mesh, body);
 
         Random random = new Random();
-        float randX = (random.nextFloat() * 4) - 2f;
-        float randY = (random.nextFloat() * 4) - 2f;
+        float randX = (random.nextFloat() * 3) - 1.5f;
+        float randY = (random.nextFloat() * 3) - 1.5f;
 
         body.setPosition(randX, randY);
         body.setVelocity(random.nextFloat() * .001f, random.nextFloat() * .001f);
-
-        PolygonEntity polygonEntity = new PolygonEntity(mesh, body);
 
         entities.add(polygonEntity);
     }
@@ -73,24 +72,24 @@ public class ShapeApp implements Game {
         LineSegment verticalLine = new LineSegment();
         verticalLine.set(0f, 0f, 0f, 4f);
 
-        float pos = 3f;
+        float pos = 2f;
 
-        CollisionObserver collisionObserver = new ShapeAppCollisionObserver(0f, -1f);
+        CollisionObserver collisionObserver = new ShapeAppCollisionObserver(1f, -1f);
         Body top = physicalWorld.createBody(new LineSegment(horizontalLine));
         top.setPosition(0f, pos);
         top.addCollisionObserver(collisionObserver);
 
-        collisionObserver = new ShapeAppCollisionObserver(-1f, 0f);
+        collisionObserver = new ShapeAppCollisionObserver(-1f, 1f);
         Body right = physicalWorld.createBody(new LineSegment(verticalLine));
         right.setPosition(pos, 0f);
         right.addCollisionObserver(collisionObserver);
 
-        collisionObserver = new ShapeAppCollisionObserver(0f, -1f);
+        collisionObserver = new ShapeAppCollisionObserver(1f, -1f);
         Body bottom = physicalWorld.createBody(new LineSegment(horizontalLine));
         bottom.setPosition(0f, -pos);
         bottom.addCollisionObserver(collisionObserver);
 
-        collisionObserver = new ShapeAppCollisionObserver(-1f, 0f);
+        collisionObserver = new ShapeAppCollisionObserver(-1f, 1f);
         Body left = physicalWorld.createBody(new LineSegment(verticalLine));
         left.setPosition(-pos, 0f);
         left.addCollisionObserver(collisionObserver);
@@ -108,7 +107,7 @@ public class ShapeApp implements Game {
         int screenHeight = 300;
         float invAspect = (float) screenWidth / screenHeight;
 
-        projection.scaling(0.25f * invAspect);
+        projection.scaling(0.1f * invAspect);
         projectionMatrix.bind(projection);
 
         entities.forEach(entity -> {

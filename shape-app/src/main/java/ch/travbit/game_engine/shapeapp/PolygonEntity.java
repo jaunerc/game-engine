@@ -93,15 +93,8 @@ public class PolygonEntity extends Entity {
         } else {
             currentColor.set(polygonColor.asVector());
         }
-        defineVertices();
-        defineIndices(vertices);
         defineColors(vertices);
-        getMesh().storeBuffers(vertices, colors, indices);
-    }
-
-    @Override
-    public void setPosition(Vector3f position) {
-        super.setPosition(position);
-        body.setPosition(getPosition().x, getPosition().y);
+        getMesh().storeColorsBuffer(colors);
+        setPosition(new Vector3f(body.getPosition(), 0f));
     }
 }
