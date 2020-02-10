@@ -15,6 +15,11 @@ public class LineSegment implements Shape {
     public LineSegment() {
     }
 
+    public LineSegment(LineSegment otherLine) {
+        start = otherLine.getStart();
+        end = otherLine.getEnd();
+    }
+
     @Override
     public void translate(Vector2f translation) {
         start.add(translation);
@@ -35,15 +40,28 @@ public class LineSegment implements Shape {
     }
 
     public Vector2f getStart() {
-        return start;
+        return new Vector2f(start);
     }
 
     public void setStart(Vector2f start) {
         this.start = start;
     }
 
+    public void setStart(float x, float y) {
+        setStart(new Vector2f(x, y));
+    }
+
+    public void setEnd(float x, float y) {
+        setEnd(new Vector2f(x, y));
+    }
+
+    public void set(float startX, float startY, float endX, float endY) {
+        setStart(startX, startY);
+        setEnd(endX, endY);
+    }
+
     public Vector2f getEnd() {
-        return end;
+        return new Vector2f(end);
     }
 
     public void setEnd(Vector2f end) {

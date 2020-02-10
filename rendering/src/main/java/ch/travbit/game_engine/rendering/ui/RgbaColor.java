@@ -2,12 +2,26 @@ package ch.travbit.game_engine.rendering.ui;
 
 import org.joml.Vector4f;
 
+import java.util.Random;
+
 /**
  * This class represents colors in the rgba format.
  */
 public class RgbaColor {
     public final static RgbaColor BLACK = new RgbaColor(0, 0, 0, 1);
     public final static RgbaColor WHITE = new RgbaColor(1, 1, 1, 1);
+
+    /**
+     * Creates a new rgba color with random values for rgb.
+     * <p>
+     * The returned color has no transparency so the alpha value is always 1.
+     *
+     * @return a random color
+     */
+    public static RgbaColor randomColorNoTransparency() {
+        Random random = new Random();
+        return new RgbaColor(random.nextFloat(), random.nextFloat(), random.nextFloat(), 1f);
+    }
 
     private float r, g, b, a;
 
