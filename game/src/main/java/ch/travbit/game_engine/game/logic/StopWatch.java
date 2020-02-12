@@ -13,18 +13,30 @@ public class StopWatch {
     private int lastTimeDeltaNano;
 
     public StopWatch() {
-        startTime = LocalDateTime.now();
-        lastTimeStamp = LocalDateTime.now();
+        LocalDateTime initialTimeStamp = timeStamp();
+        startTime = initialTimeStamp;
+        lastTimeStamp = initialTimeStamp;
         lastTimeDeltaNano = 0;
+    }
+
+    private LocalDateTime timeStamp() {
+        return LocalDateTime.now();
+    }
+
+    private int measureDuration(LocalDateTime startTime, LocalDateTime endTime) {
+        return Duration.between(startTime, endTime).getNano();
     }
 
     /**
      * Stores the time delta between the last time stamp and now.
      */
     public void interval() {
-        LocalDateTime current = LocalDateTime.now();
-        lastTimeDeltaNano = Duration.between(lastTimeStamp, current).getNano();
-        lastTimeStamp = LocalDateTime.now();
+        interval(timeStamp());
+    }
+
+    public void interval(LocalDateTime currentTime) {
+        lastTimeDeltaNano = measureDuration(lastTimeStamp, currentTime);
+        lastTimeStamp = currentTime;
     }
 
     public LocalDateTime getStartTime() {
@@ -33,5 +45,9 @@ public class StopWatch {
 
     public int getLastTimeDeltaNano() {
         return lastTimeDeltaNano;
+    }
+
+    public LocalDateTime getLastTimeStamp() {
+        return lastTimeStamp;
     }
 }
