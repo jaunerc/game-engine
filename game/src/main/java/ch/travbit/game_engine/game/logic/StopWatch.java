@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 /**
  * This class represents a stopwatch to measure time deltas.
  */
-public class StopWatch {
+public final class StopWatch {
 
     private LocalDateTime startTime;
     private LocalDateTime lastTimeStamp;
