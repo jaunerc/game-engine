@@ -50,4 +50,13 @@ public final class StopWatch {
     public LocalDateTime getLastTimeStamp() {
         return lastTimeStamp;
     }
+
+    @Override
+    public String toString() {
+        return "StopWatch{" +
+                "startTime=" + startTime +
+                ", lastTimeStamp=" + lastTimeStamp +
+                ", lastTimeDeltaNano=" + lastTimeDeltaNano +
+                '}';
+    }
 }
