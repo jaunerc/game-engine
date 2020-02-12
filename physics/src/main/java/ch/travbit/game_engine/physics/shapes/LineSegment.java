@@ -13,11 +13,16 @@ public class LineSegment implements Shape {
     private Vector2f end;
 
     public LineSegment() {
+        this(new Vector2f(0, 0), new Vector2f(1, 0));
     }
 
     public LineSegment(LineSegment otherLine) {
-        start = otherLine.getStart();
-        end = otherLine.getEnd();
+        this(new Vector2f(otherLine.getStart()), new Vector2f(otherLine.getEnd()));
+    }
+
+    public LineSegment(Vector2f start, Vector2f end) {
+        this.start = start;
+        this.end = end;
     }
 
     @Override

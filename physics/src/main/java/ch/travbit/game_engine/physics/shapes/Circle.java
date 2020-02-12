@@ -45,6 +45,6 @@ public class Circle implements Shape {
      */
     @Override
     public Vector2f calcCentroid() {
-        return new Vector2f(center.x, center.y);
+        return new Vector2f(center);
     }
 }
