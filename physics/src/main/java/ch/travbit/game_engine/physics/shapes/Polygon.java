@@ -47,7 +47,7 @@ public class Polygon implements Shape {
     }
 
     public List<Vector2f> getVertices() {
-        return vertices;
+        return new ArrayList<>(vertices);
     }
 
     /**
