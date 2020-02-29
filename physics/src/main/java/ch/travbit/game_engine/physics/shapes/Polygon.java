@@ -16,7 +16,7 @@ import java.util.List;
  */
 public class Polygon implements Shape {
 
-    private List<Vector2f> vertices;
+    private final List<Vector2f> vertices;
 
     public Polygon() {
         vertices = new ArrayList<>();
@@ -28,6 +28,7 @@ public class Polygon implements Shape {
      * @param values Array of vertices (x,y)
      */
     public void set(Vector2f... values) {
+        vertices.clear();
         vertices.addAll(Arrays.asList(values));
     }
 
@@ -41,6 +42,7 @@ public class Polygon implements Shape {
             throw new IllegalArgumentException("The given values must be a list of coordinate pairs (x, y) and " +
                     "therefore the length of the list must be even.");
         }
+        vertices.clear();
         for (int i = 0; i < values.length; i += 2) {
             vertices.add(new Vector2f(values[i], values[i + 1]));
         }
@@ -98,12 +100,12 @@ public class Polygon implements Shape {
      * @param vertexB the second vertex
      * @return the signed area
      */
-    private float calcArea(Vector2f vertexA, Vector2f vertexB) {
+    private float calcArea(final Vector2f vertexA, final Vector2f vertexB) {
         return vertexA.x * vertexB.y - vertexB.x * vertexA.y;
     }
 
     @Override
-    public void translate(Vector2f translation) {
+    public void translate(final Vector2f translation) {
         vertices.forEach(v -> v.add(translation));
     }
 

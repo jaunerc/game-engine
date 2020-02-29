@@ -9,12 +9,16 @@ import org.joml.Vector2f;
  */
 public class Circle implements Shape {
 
-    private Vector2f center;
+    private final Vector2f center;
     private float radius;
 
     public Circle() {
-        this.center = new Vector2f(0, 0);
-        this.radius = 1f;
+        this(new Vector2f(0, 0), 1f);
+    }
+
+    public Circle(Vector2f center, float radius) {
+        this.center = center;
+        this.radius = radius;
     }
 
     public Vector2f getCenter() {
@@ -26,7 +30,11 @@ public class Circle implements Shape {
     }
 
     public void setCenter(Vector2f center) {
-        this.center = center;
+        setCenter(center.x, center.y);
+    }
+
+    public void setCenter(float x, float y) {
+        center.set(x, y);
     }
 
     public void setRadius(float radius) {

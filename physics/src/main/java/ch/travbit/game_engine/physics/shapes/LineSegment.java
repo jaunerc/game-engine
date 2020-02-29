@@ -9,8 +9,8 @@ import org.joml.Vector2f;
  */
 public class LineSegment implements Shape {
 
-    private Vector2f start;
-    private Vector2f end;
+    private final Vector2f start;
+    private final Vector2f end;
 
     public LineSegment() {
         this(new Vector2f(0, 0), new Vector2f(1, 0));
@@ -38,38 +38,37 @@ public class LineSegment implements Shape {
      */
     @Override
     public Vector2f calcCentroid() {
-        Vector2f centroid = new Vector2f(
+        return new Vector2f(
                 0.5f * (start.x + end.x),
                 0.5f * start.y + end.y);
-        return centroid;
-    }
-
-    public Vector2f getStart() {
-        return new Vector2f(start);
-    }
-
-    public void setStart(Vector2f start) {
-        this.start = start;
     }
 
     public void setStart(float x, float y) {
-        setStart(new Vector2f(x, y));
+        start.set(x, y);
+    }
+
+    public void setStart(Vector2f start) {
+        setStart(start.x, start.y);
+    }
+
+    public Vector2f getStart() {
+        return start;
     }
 
     public void setEnd(float x, float y) {
-        setEnd(new Vector2f(x, y));
+        end.set(x, y);
+    }
+
+    public void setEnd(Vector2f end) {
+        setEnd(end.x, end.y);
+    }
+
+    public Vector2f getEnd() {
+        return end;
     }
 
     public void set(float startX, float startY, float endX, float endY) {
         setStart(startX, startY);
         setEnd(endX, endY);
-    }
-
-    public Vector2f getEnd() {
-        return new Vector2f(end);
-    }
-
-    public void setEnd(Vector2f end) {
-        this.end = end;
     }
 }
