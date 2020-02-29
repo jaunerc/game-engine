@@ -31,21 +31,21 @@ public class IntersectionLinePolygonTest {
     @Test
     void testForIntersectingPolyLine() {
         createIntersectingShapes();
-        Intersection<LineSegment, Polygon> intersection = new IntersectionLinePolygon(lineSegment, polygon);
-        Assertions.assertTrue(intersection.test());
+        Intersection<LineSegment, Polygon> intersection = new IntersectionLinePolygon();
+        Assertions.assertTrue(intersection.test(lineSegment, polygon));
     }
 
     @Test
     void testForNotIntersectingPolyLine() {
         createNotIntersectingShapes();
-        Intersection<LineSegment, Polygon> intersection = new IntersectionLinePolygon(lineSegment, polygon);
-        Assertions.assertFalse(intersection.test());
+        Intersection<LineSegment, Polygon> intersection = new IntersectionLinePolygon();
+        Assertions.assertFalse(intersection.test(lineSegment, polygon));
     }
 
     @Test
     void testForLineInsidePoly() {
         createLineInsidePolygon();
-        Intersection<LineSegment, Polygon> intersection = new IntersectionLinePolygon(lineSegment, polygon);
-        Assertions.assertTrue(intersection.test());
+        Intersection<LineSegment, Polygon> intersection = new IntersectionLinePolygon();
+        Assertions.assertTrue(intersection.test(lineSegment, polygon));
     }
 }

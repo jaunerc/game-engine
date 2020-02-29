@@ -43,28 +43,28 @@ class IntersectionPolygonCircleTest {
     @Test
     void testForIntersectingCircles() {
         createIntersectingShapes();
-        Intersection<Polygon, Circle> intersection = new IntersectionPolygonCircle(poly, circle);
-        assertTrue(intersection.test());
+        Intersection<Polygon, Circle> intersection = new IntersectionPolygonCircle();
+        assertTrue(intersection.test(poly, circle));
     }
 
     @Test
     void testForNotIntersectingCircles() {
         createNotIntersectingShapes();
-        Intersection<Polygon, Circle> intersection = new IntersectionPolygonCircle(poly, circle);
-        assertFalse(intersection.test());
+        Intersection<Polygon, Circle> intersection = new IntersectionPolygonCircle();
+        assertFalse(intersection.test(poly, circle));
     }
 
     @Test
     void testForCircleInsidePolygon() {
         createCircleInsidePolygonShapes();
-        Intersection<Polygon, Circle> intersection = new IntersectionPolygonCircle(poly, circle);
-        assertTrue(intersection.test());
+        Intersection<Polygon, Circle> intersection = new IntersectionPolygonCircle();
+        assertTrue(intersection.test(poly, circle));
     }
 
     @Test
     void testForCircleNotInsidePolygon() {
         createCircleNotInsidePolygonShapes();
-        Intersection<Polygon, Circle> intersection = new IntersectionPolygonCircle(poly, circle);
-        assertFalse(intersection.test());
+        Intersection<Polygon, Circle> intersection = new IntersectionPolygonCircle();
+        assertFalse(intersection.test(poly, circle));
     }
 }

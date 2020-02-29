@@ -9,18 +9,13 @@ import org.joml.Vector2f;
  */
 class IntersectionPolygonPolygon extends Intersection<Polygon, Polygon> {
 
-
-    public IntersectionPolygonPolygon(Polygon shapeA, Polygon shapeB) {
-        super(shapeA, shapeB);
-    }
-
     public IntersectionPolygonPolygon() {
     }
 
     @Override
-    public boolean test() {
-        Vector2f[] verticesA = getShapeA().getVertices().toArray(new Vector2f[0]);
-        Vector2f[] verticesB = getShapeB().getVertices().toArray(new Vector2f[0]);
+    public boolean test(Polygon polygonA, Polygon polygonB) {
+        Vector2f[] verticesA = polygonA.getVertices().toArray(new Vector2f[0]);
+        Vector2f[] verticesB = polygonB.getVertices().toArray(new Vector2f[0]);
         return Intersectionf.testPolygonPolygon(verticesA, verticesB);
     }
 }

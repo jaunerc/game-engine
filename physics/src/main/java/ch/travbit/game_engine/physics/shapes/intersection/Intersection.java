@@ -14,41 +14,17 @@ import java.util.List;
  */
 abstract class Intersection<A extends Shape, B extends Shape> {
 
-    private A shapeA;
-    private B shapeB;
-
-    public Intersection(A shapeA, B shapeB) {
-        this.shapeA = shapeA;
-        this.shapeB = shapeB;
-    }
-
     public Intersection() {
-        shapeA = null;
-        shapeB = null;
-    }
-
-    public A getShapeA() {
-        return shapeA;
-    }
-
-    public B getShapeB() {
-        return shapeB;
-    }
-
-    public void setShapeA(A shapeA) {
-        this.shapeA = shapeA;
-    }
-
-    public void setShapeB(B shapeB) {
-        this.shapeB = shapeB;
     }
 
     /**
      * Indicates whether the two shape are intersecting.
      *
+     * @param shapeA the first shape
+     * @param shapeB the second shape
      * @return true if the two shapes are intersecting; false otherwise
      */
-    public abstract boolean test();
+    public abstract boolean test(A shapeA, B shapeB);
 
     /**
      * Indicates whether a ray intersects an odd number of line segments.

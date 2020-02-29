@@ -31,14 +31,14 @@ class IntersectionCircleCircleTest {
     @Test
     void testForIntersectingCircles() {
         createIntersectingCircles();
-        Intersection<Circle, Circle> intersection = new IntersectionCircleCircle(A, B);
-        assertTrue(intersection.test());
+        Intersection<Circle, Circle> intersection = new IntersectionCircleCircle();
+        assertTrue(intersection.test(A, B));
     }
 
     @Test
     void testForNotIntersectingCircles() {
         createNotIntersectingCircles();
-        Intersection<Circle, Circle> intersection = new IntersectionCircleCircle(A, B);
-        assertFalse(intersection.test());
+        Intersection<Circle, Circle> intersection = new IntersectionCircleCircle();
+        assertFalse(intersection.test(A, B));
     }
 }

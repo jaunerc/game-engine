@@ -44,28 +44,28 @@ public class IntersectionLineLineTest {
     @Test
     void testForIntersectingLines() {
         createIntersectingLineSegments();
-        Intersection<LineSegment, LineSegment> intersection = new IntersectionLineLine(lineA, lineB);
-        Assertions.assertTrue(intersection.test());
+        Intersection<LineSegment, LineSegment> intersection = new IntersectionLineLine();
+        Assertions.assertTrue(intersection.test(lineA, lineB));
     }
 
     @Test
     void testForNotIntersectingLines() {
         createNotIntersectingLineSegments();
-        Intersection<LineSegment, LineSegment> intersection = new IntersectionLineLine(lineA, lineB);
-        Assertions.assertFalse(intersection.test());
+        Intersection<LineSegment, LineSegment> intersection = new IntersectionLineLine();
+        Assertions.assertFalse(intersection.test(lineA, lineB));
     }
 
     @Test
     void testForCollinearIntersectingLines() {
         createCollinearIntersectingLineSegments();
-        Intersection<LineSegment, LineSegment> intersection = new IntersectionLineLine(lineA, lineB);
-        Assertions.assertTrue(intersection.test());
+        Intersection<LineSegment, LineSegment> intersection = new IntersectionLineLine();
+        Assertions.assertTrue(intersection.test(lineA, lineB));
     }
 
     @Test
     void testForCollinearNotIntersectingLines() {
         createCollinearNotIntersectingLineSegments();
-        Intersection<LineSegment, LineSegment> intersection = new IntersectionLineLine(lineA, lineB);
-        Assertions.assertFalse(intersection.test());
+        Intersection<LineSegment, LineSegment> intersection = new IntersectionLineLine();
+        Assertions.assertFalse(intersection.test(lineA, lineB));
     }
 }

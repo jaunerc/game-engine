@@ -12,13 +12,9 @@ class IntersectionLinePolygon extends Intersection<LineSegment, Polygon> {
 
     }
 
-    public IntersectionLinePolygon(LineSegment shapeA, Polygon shapeB) {
-        super(shapeA, shapeB);
-    }
-
     @Override
-    public boolean test() {
-        List<Vector2f> vertices = getShapeB().getVertices();
+    public boolean test(LineSegment lineSegment, Polygon polygon) {
+        List<Vector2f> vertices = polygon.getVertices();
         IntersectionLineLine intersectionLineLine;
         LineSegment polygonLine = new LineSegment();
 
@@ -26,12 +22,12 @@ class IntersectionLinePolygon extends Intersection<LineSegment, Polygon> {
             polygonLine.setStart(vertices.get(i));
             polygonLine.setEnd(vertices.get(j));
 
-            intersectionLineLine = new IntersectionLineLine(getShapeA(), polygonLine);
-            if (intersectionLineLine.test()) {
+            intersectionLineLine = new IntersectionLineLine();
+            if (intersectionLineLine.test(lineSegment, polygonLine)) {
                 return true;
             }
         }
 
-        return isRayIntersectingOddNumberOfLines(getShapeA().getStart(), vertices);
+        return isRayIntersectingOddNumberOfLines(lineSegment.getStart(), vertices);
     }
 }

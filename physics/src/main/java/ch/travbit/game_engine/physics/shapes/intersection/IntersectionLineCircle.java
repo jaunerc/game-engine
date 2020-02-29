@@ -12,11 +12,6 @@ import org.joml.Vector3f;
 class IntersectionLineCircle extends Intersection<LineSegment, Circle> {
 
     public IntersectionLineCircle() {
-
-    }
-
-    public IntersectionLineCircle(LineSegment shapeA, Circle shapeB) {
-        super(shapeA, shapeB);
     }
 
     /**
@@ -26,15 +21,17 @@ class IntersectionLineCircle extends Intersection<LineSegment, Circle> {
      * the distance to the circle center is measured. The intersection test returns true if the distance between the
      * closest point and the circle center is lower than the radius of the circle.
      *
+     * @param lineSegment the LineSegment shape
+     * @param circle      the Circle shape
      * @return true if the LineSegment intersects the Circle; false otherwise
      */
     @Override
-    public boolean test() {
-        Vector2f lineStart = getShapeA().getStart();
-        Vector2f lineEnd = getShapeA().getEnd();
-        Vector2f circleCenter = getShapeB().getCenter();
+    public boolean test(LineSegment lineSegment, Circle circle) {
+        Vector2f lineStart = lineSegment.getStart();
+        Vector2f lineEnd = lineSegment.getEnd();
+        Vector2f circleCenter = circle.getCenter();
         Vector3f closestPoint = new Vector3f();
-        float circleRadius = getShapeB().getRadius();
+        float circleRadius = circle.getRadius();
 
         /*
         the result is saved in the 3-dimensional vector closestPoint which is passed as a parameter.

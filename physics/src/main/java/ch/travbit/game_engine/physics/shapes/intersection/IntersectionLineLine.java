@@ -9,11 +9,6 @@ import org.joml.Vector2f;
 class IntersectionLineLine extends Intersection<LineSegment, LineSegment> {
 
     public IntersectionLineLine() {
-
-    }
-
-    public IntersectionLineLine(LineSegment shapeA, LineSegment shapeB) {
-        super(shapeA, shapeB);
     }
 
     /**
@@ -21,14 +16,16 @@ class IntersectionLineLine extends Intersection<LineSegment, LineSegment> {
      * <p>
      * This is an implementation based on: http://www.cs.swan.ac.uk/~cssimon/line_intersection.html
      *
+     * @param lineSegmentA the first LineSegment shape
+     * @param lineSegmentB the second LineSegment shape
      * @return true if the LineSegments intersect; false otherwise
      */
     @Override
-    public boolean test() {
-        Vector2f p1 = getShapeA().getStart();
-        Vector2f p2 = getShapeA().getEnd();
-        Vector2f p3 = getShapeB().getStart();
-        Vector2f p4 = getShapeB().getEnd();
+    public boolean test(LineSegment lineSegmentA, LineSegment lineSegmentB) {
+        Vector2f p1 = lineSegmentA.getStart();
+        Vector2f p2 = lineSegmentA.getEnd();
+        Vector2f p3 = lineSegmentB.getStart();
+        Vector2f p4 = lineSegmentB.getEnd();
 
         float divisor = (p4.x - p3.x) * (p1.y - p2.y) - (p1.x - p2.x) * (p4.y - p3.y);
 

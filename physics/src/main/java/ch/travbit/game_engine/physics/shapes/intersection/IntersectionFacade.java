@@ -85,9 +85,7 @@ public class IntersectionFacade {
     }
 
     private static <A extends Shape, B extends Shape> boolean test(Intersection<A, B> intersection, A shapeA, B shapeB) {
-        intersection.setShapeA(shapeA);
-        intersection.setShapeB(shapeB);
-        return intersection.test();
+        return intersection.test(shapeA, shapeB);
     }
 
     private static boolean testPolygonPolygon(Polygon polygonA, Polygon polygonB) {

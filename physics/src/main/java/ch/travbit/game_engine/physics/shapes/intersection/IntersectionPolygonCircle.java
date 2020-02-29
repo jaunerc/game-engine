@@ -12,11 +12,6 @@ import java.util.List;
  */
 class IntersectionPolygonCircle extends Intersection<Polygon, Circle> {
 
-
-    public IntersectionPolygonCircle(Polygon shapeA, Circle shapeB) {
-        super(shapeA, shapeB);
-    }
-
     public IntersectionPolygonCircle() {
     }
 
@@ -27,12 +22,14 @@ class IntersectionPolygonCircle extends Intersection<Polygon, Circle> {
      * polygon is inside the circle. Second if the circle is inside the polygon. This method returns true if one of
      * the cases is fulfilled. The idea is from a stackexchange post.
      *
+     * @param polygon the Polygon shape
+     * @param circle  the Circle shape
      * @return true if the circle intersects with the polygon; false otherwise
      * @see <a href="https://gamedev.stackexchange.com/questions/7735/how-do-i-test-if-a-circle-and-concave-polygon-intersect"/>
      */
     @Override
-    public boolean test() {
-        return circleIntersectsWithALine() || isCircleInsideThePolygon();
+    public boolean test(Polygon polygon, Circle circle) {
+        return circleIntersectsWithALine(polygon, circle) || isCircleInsideThePolygon(polygon, circle);
     }
 
     /**
@@ -44,11 +41,11 @@ class IntersectionPolygonCircle extends Intersection<Polygon, Circle> {
      *
      * @return true if the circle intersects with any line of the polygon; false otherwise
      */
-    private boolean circleIntersectsWithALine() {
+    private boolean circleIntersectsWithALine(Polygon polygon, Circle circle) {
         Vector2f vertexA;
         Vector2f vertexB;
         IntersectionLineCircle intersectionLineCircle;
-        List<Vector2f> polygonVertices = getShapeA().getVertices();
+        List<Vector2f> polygonVertices = polygon.getVertices();
         LineSegment lineSegment = new LineSegment();
         for (int i = 0; i < polygonVertices.size(); i++) {
             vertexA = polygonVertices.get(i);
@@ -61,8 +58,8 @@ class IntersectionPolygonCircle extends Intersection<Polygon, Circle> {
 
             lineSegment.setStart(vertexA);
             lineSegment.setEnd(vertexB);
-            intersectionLineCircle = new IntersectionLineCircle(lineSegment, getShapeB());
-            if (intersectionLineCircle.test()) {
+            intersectionLineCircle = new IntersectionLineCircle();
+            if (intersectionLineCircle.test(lineSegment, circle)) {
                 return true;
             }
         }
@@ -78,9 +75,9 @@ class IntersectionPolygonCircle extends Intersection<Polygon, Circle> {
      *
      * @return true if the circle is whole inside the polygon; false otherwise
      */
-    private boolean isCircleInsideThePolygon() {
-        Vector2f circleCenter = getShapeB().getCenter();
-        List<Vector2f> polygonVertices = getShapeA().getVertices();
+    private boolean isCircleInsideThePolygon(Polygon polygon, Circle circle) {
+        Vector2f circleCenter = circle.getCenter();
+        List<Vector2f> polygonVertices = polygon.getVertices();
 
         return isRayIntersectingOddNumberOfLines(circleCenter, polygonVertices);
     }

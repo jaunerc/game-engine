@@ -8,17 +8,13 @@ import org.joml.Intersectionf;
  */
 class IntersectionCircleCircle extends Intersection<Circle, Circle> {
 
-    public IntersectionCircleCircle(Circle shapeA, Circle shapeB) {
-        super(shapeA, shapeB);
-    }
-
     public IntersectionCircleCircle() {
     }
 
     @Override
-    public boolean test() {
+    public boolean test(Circle circleA, Circle circleB) {
         return Intersectionf.testCircleCircle(
-                getShapeA().getCenter(), getShapeA().getRadius(),
-                getShapeB().getCenter(), getShapeB().getRadius());
+                circleA.getCenter(), circleA.getRadius(),
+                circleB.getCenter(), circleB.getRadius());
     }
 }
